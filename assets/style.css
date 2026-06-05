@@ -1,0 +1,116 @@
+/* Base styling and typography */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Make headers look sleek */
+h1, h2, h3 {
+    font-weight: 700 !important;
+    background: -webkit-linear-gradient(45deg, #4f46e5, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-bottom: 0.5rem;
+}
+
+h3 {
+    font-size: 1.5rem !important;
+    background: none;
+    -webkit-background-clip: border-box;
+    -webkit-text-fill-color: currentColor;
+    color: #e2e8f0;
+}
+
+/* Sidebar styling */
+[data-testid="stSidebar"] {
+    background-color: #0f172a;
+    border-right: 1px solid #1e293b;
+}
+
+[data-testid="stSidebar"] h1 {
+    background: -webkit-linear-gradient(45deg, #10b981, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Card-like containers for content */
+.css-1r6slb0, .css-1y4p8pa {
+    background-color: #1e293b;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #334155;
+    margin-bottom: 1rem;
+}
+
+/* Buttons */
+.stButton>button {
+    width: 100%;
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.stButton>button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+    border: none;
+    color: white;
+}
+
+/* Metrics and Data */
+[data-testid="stMetricValue"] {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #10b981;
+}
+
+/* Progress bars */
+.stProgress > div > div > div > div {
+    background-image: linear-gradient(to right, #4f46e5, #ec4899);
+}
+
+/* Tabs */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 2rem;
+    background-color: transparent;
+}
+
+.stTabs [data-baseweb="tab"] {
+    height: 3.5rem;
+    white-space: pre-wrap;
+    background-color: transparent;
+    border-radius: 0;
+    color: #94a3b8;
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+}
+
+.stTabs [data-baseweb="tab"]:hover {
+    color: #f8fafc;
+}
+
+.stTabs [aria-selected="true"] {
+    color: #f8fafc !important;
+    border-bottom: 2px solid #6366f1 !important;
+}
+
+/* Expander - Reasoning */
+.streamlit-expanderHeader {
+    font-style: italic;
+    color: #cbd5e1;
+    background-color: rgba(30, 41, 59, 0.5);
+    border-radius: 8px;
+}
+
+/* Alerts / Info boxes */
+div.stAlert {
+    background-color: rgba(15, 23, 42, 0.6);
+    border-left: 4px solid #6366f1;
+    color: #e2e8f0;
+}
