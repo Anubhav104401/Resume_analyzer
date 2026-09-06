@@ -1,0 +1,2056 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { color-scheme: light dark; }
+  body { margin: 0; font: 14px system-ui, -apple-system, sans-serif; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body><title>InterviewForge Field Guide</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#edeff1; --paper-raised:#ffffff; --paper-sunk:#e3e7ea;
+  --ink:#1a2026; --ink-soft:#525c66; --ink-faint:#7b858f;
+  --ember:#b8562a; --ember-soft:rgba(184,86,42,.10);
+  --steel:#2f6a72; --steel-soft:rgba(47,106,114,.10);
+  --brass:#8a6f2c;
+  --good:#3f7d4a; --good-soft:rgba(63,125,74,.10);
+  --warn:#a4711a; --warn-soft:rgba(164,113,26,.10);
+  --bad:#a83b3b; --bad-soft:rgba(168,59,59,.10);
+  --line:#d5dade; --line-strong:#bcc4ca;
+  --code-bg:#f6f8f9;
+  --shadow:0 1px 2px rgba(20,30,40,.06), 0 8px 22px -14px rgba(20,30,40,.35);
+  --tok-key:#9a3768; --tok-str:#3f7d4a; --tok-com:#7b858f; --tok-num:#8a6f2c; --tok-fn:#2f6a72;
+  --font-display:'Zilla Slab', Georgia, 'Times New Roman', serif;
+  --font-body:'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:'IBM Plex Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#131619; --paper-raised:#1a1e22; --paper-sunk:#0e1114;
+    --ink:#e4e7ea; --ink-soft:#a3adb6; --ink-faint:#7c868f;
+    --ember:#dd7f4a; --ember-soft:rgba(221,127,74,.14);
+    --steel:#63a8b0; --steel-soft:rgba(99,168,176,.14);
+    --brass:#c3a15a;
+    --good:#5faf6d; --good-soft:rgba(95,175,109,.14);
+    --warn:#d29a45; --warn-soft:rgba(210,154,69,.14);
+    --bad:#df6a63; --bad-soft:rgba(223,106,99,.14);
+    --line:#282e33; --line-strong:#39424a;
+    --code-bg:#15191d;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 22px -14px rgba(0,0,0,.8);
+    --tok-key:#d98cb4; --tok-str:#8fce9b; --tok-com:#7c868f; --tok-num:#c3a15a; --tok-fn:#63a8b0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131619; --paper-raised:#1a1e22; --paper-sunk:#0e1114;
+  --ink:#e4e7ea; --ink-soft:#a3adb6; --ink-faint:#7c868f;
+  --ember:#dd7f4a; --ember-soft:rgba(221,127,74,.14);
+  --steel:#63a8b0; --steel-soft:rgba(99,168,176,.14);
+  --brass:#c3a15a;
+  --good:#5faf6d; --good-soft:rgba(95,175,109,.14);
+  --warn:#d29a45; --warn-soft:rgba(210,154,69,.14);
+  --bad:#df6a63; --bad-soft:rgba(223,106,99,.14);
+  --line:#282e33; --line-strong:#39424a;
+  --code-bg:#15191d;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 22px -14px rgba(0,0,0,.8);
+  --tok-key:#d98cb4; --tok-str:#8fce9b; --tok-com:#7c868f; --tok-num:#c3a15a; --tok-fn:#63a8b0;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:var(--font-body); font-size:16.5px; line-height:1.68;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--steel); text-underline-offset:3px; text-decoration-thickness:1px}
+a:hover{color:var(--ember)}
+:focus-visible{outline:2px solid var(--ember); outline-offset:3px; border-radius:3px}
+
+/* ---------- masthead ---------- */
+.masthead{
+  background:var(--paper-sunk); border-bottom:1px solid var(--line);
+  padding:3.5rem 2rem 2.5rem;
+}
+.masthead-inner{max-width:1240px; margin:0 auto; display:flex; flex-direction:column; gap:1.1rem}
+.eyebrow{
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--ember); font-weight:600;
+}
+.masthead h1{
+  font-family:var(--font-display); font-weight:700; font-size:clamp(2.1rem,5vw,3.3rem);
+  line-height:1.08; margin:0; text-wrap:balance; letter-spacing:-.01em;
+}
+.lede{max-width:64ch; color:var(--ink-soft); font-size:1.06rem; margin:0}
+.stats{display:flex; flex-wrap:wrap; gap:0 2.5rem; margin-top:.6rem; padding-top:1.2rem; border-top:1px solid var(--line)}
+.stat{display:flex; flex-direction:column; gap:.1rem; padding:.4rem 0}
+.stat b{font-family:var(--font-display); font-size:1.45rem; font-weight:600; font-variant-numeric:tabular-nums; color:var(--ink)}
+.stat span{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.11em; text-transform:uppercase; color:var(--ink-faint)}
+
+/* ---------- layout ---------- */
+.layout{
+  display:grid; grid-template-columns:250px minmax(0,1fr); gap:3.5rem;
+  max-width:1240px; margin:0 auto; padding:0 2rem 7rem;
+}
+nav.toc{position:sticky; top:0; align-self:start; max-height:100vh; overflow-y:auto; padding:2.2rem 0 3rem}
+nav.toc h2{
+  font-family:var(--font-mono); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-faint); margin:1.6rem 0 .55rem; font-weight:600;
+}
+nav.toc h2:first-child{margin-top:0}
+nav.toc ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.05rem}
+nav.toc a{
+  display:block; padding:.3rem .6rem; border-left:2px solid transparent; color:var(--ink-soft);
+  text-decoration:none; font-size:.9rem; border-radius:0 4px 4px 0;
+}
+nav.toc a:hover{background:var(--steel-soft); color:var(--ink)}
+nav.toc a.active{border-left-color:var(--ember); color:var(--ink); font-weight:600; background:var(--ember-soft)}
+nav.toc a.sub{padding-left:1.4rem; font-size:.84rem; font-family:var(--font-mono)}
+
+main{min-width:0; max-width:900px; padding-top:2.6rem}
+section{margin-bottom:4.5rem; scroll-margin-top:1.5rem}
+section > h2{
+  font-family:var(--font-display); font-weight:700; font-size:2rem; line-height:1.18;
+  margin:0 0 .35rem; text-wrap:balance; letter-spacing:-.01em;
+}
+.sec-num{font-family:var(--font-mono); font-size:.72rem; letter-spacing:.15em; color:var(--ember); text-transform:uppercase; font-weight:600; display:block; margin-bottom:.5rem}
+.sec-intro{color:var(--ink-soft); max-width:66ch; margin:0 0 1.8rem; font-size:1.02rem}
+h3{font-family:var(--font-display); font-weight:600; font-size:1.4rem; margin:2.6rem 0 .7rem; line-height:1.25; text-wrap:balance}
+h4{font-family:var(--font-body); font-weight:700; font-size:1.02rem; margin:1.8rem 0 .5rem; color:var(--ink)}
+p{max-width:68ch; margin:0 0 1rem}
+ul,ol{max-width:68ch; padding-left:1.3rem; margin:0 0 1.1rem}
+li{margin-bottom:.45rem}
+li::marker{color:var(--ink-faint)}
+strong{font-weight:700}
+hr{border:0; border-top:1px solid var(--line); margin:2.5rem 0}
+
+/* ---------- inline code + code blocks ---------- */
+code{font-family:var(--font-mono); font-size:.86em; background:var(--steel-soft); color:var(--ink); padding:.1em .35em; border-radius:3px}
+.code-block{margin:1.4rem 0; border:1px solid var(--line); border-radius:8px; overflow:hidden; background:var(--code-bg); box-shadow:var(--shadow)}
+.code-head{
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  padding:.55rem .9rem; background:var(--paper-raised); border-bottom:1px solid var(--line);
+}
+.code-path{font-family:var(--font-mono); font-size:.78rem; color:var(--ink); font-weight:600}
+.code-lang{font-family:var(--font-mono); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint)}
+.code-block pre{margin:0; padding:1rem 1.1rem; overflow-x:auto}
+.code-block code{background:none; padding:0; font-size:.82rem; line-height:1.6; display:block; white-space:pre}
+.hljs-keyword,.hljs-built_in,.hljs-literal{color:var(--tok-key)}
+.hljs-string,.hljs-meta .hljs-string{color:var(--tok-str)}
+.hljs-comment{color:var(--tok-com); font-style:italic}
+.hljs-number,.hljs-attr,.hljs-attribute{color:var(--tok-num)}
+.hljs-title,.hljs-title.class_,.hljs-title.function_,.hljs-selector-class,.hljs-selector-tag,.hljs-selector-pseudo{color:var(--tok-fn)}
+.hljs-params,.hljs-variable,.hljs-property{color:var(--ink)}
+.hljs-meta{color:var(--ink-faint)}
+
+/* ---------- callouts ---------- */
+.box{border-left:3px solid var(--steel); background:var(--steel-soft); padding:.95rem 1.1rem; border-radius:0 6px 6px 0; margin:1.4rem 0; max-width:70ch}
+.box p:last-child{margin-bottom:0}
+.box .tag{font-family:var(--font-mono); font-size:.65rem; letter-spacing:.14em; text-transform:uppercase; font-weight:600; color:var(--steel); display:block; margin-bottom:.35rem}
+.box.why{border-left-color:var(--ember); background:var(--ember-soft)} .box.why .tag{color:var(--ember)}
+.box.warn{border-left-color:var(--bad); background:var(--bad-soft)} .box.warn .tag{color:var(--bad)}
+.box.try{border-left-color:var(--good); background:var(--good-soft)} .box.try .tag{color:var(--good)}
+.box.note{border-left-color:var(--warn); background:var(--warn-soft)} .box.note .tag{color:var(--warn)}
+
+/* ---------- tables ---------- */
+.table-scroll{overflow-x:auto; margin:1.4rem 0; border:1px solid var(--line); border-radius:8px; background:var(--paper-raised)}
+table{border-collapse:collapse; width:100%; font-size:.9rem}
+thead th{
+  text-align:left; font-family:var(--font-mono); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-faint); font-weight:600; padding:.6rem .85rem; border-bottom:1px solid var(--line-strong); white-space:nowrap;
+}
+tbody td{padding:.6rem .85rem; border-bottom:1px solid var(--line); vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--steel-soft)}
+td.ln{font-family:var(--font-mono); font-size:.76rem; color:var(--ember); white-space:nowrap; font-variant-numeric:tabular-nums; width:1%}
+td.cd{font-family:var(--font-mono); font-size:.76rem; color:var(--ink); white-space:pre-wrap; min-width:15rem; max-width:26rem; line-height:1.5}
+td.term{font-family:var(--font-mono); font-size:.8rem; color:var(--steel); white-space:nowrap; font-weight:500}
+
+/* ---------- file cards / details ---------- */
+details.file{border:1px solid var(--line); border-radius:8px; margin:1.1rem 0; background:var(--paper-raised); overflow:hidden}
+details.file[open]{box-shadow:var(--shadow)}
+details.file > summary{
+  cursor:pointer; padding:.9rem 1.1rem; display:flex; align-items:center; gap:.8rem; flex-wrap:wrap;
+  font-family:var(--font-mono); font-weight:600; font-size:.92rem; list-style:none;
+}
+details.file > summary::-webkit-details-marker{display:none}
+details.file > summary::before{content:"▸"; color:var(--ember); font-size:.85rem; transition:transform .15s ease}
+details.file[open] > summary::before{transform:rotate(90deg)}
+details.file[open] > summary{border-bottom:1px solid var(--line); background:var(--paper-sunk)}
+details.file .body{padding:1.2rem 1.3rem 1.6rem}
+details.file .body > :first-child{margin-top:0}
+.chip{
+  font-family:var(--font-mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; font-weight:600;
+  padding:.18rem .45rem; border-radius:3px; border:1px solid var(--line-strong); color:var(--ink-soft); background:var(--paper);
+}
+.chip.front{color:var(--ember); border-color:var(--ember); background:var(--ember-soft)}
+.chip.svc{color:var(--steel); border-color:var(--steel); background:var(--steel-soft)}
+.chip.util{color:var(--brass); border-color:var(--brass)}
+.chip.cfg{color:var(--ink-faint)}
+.summary-note{margin-left:auto; font-family:var(--font-body); font-weight:400; font-size:.8rem; color:var(--ink-faint)}
+
+/* ---------- diagram ---------- */
+pre.mermaid{
+  background:var(--paper-raised); border:1px solid var(--line); border-radius:8px;
+  padding:1.4rem; margin:1.5rem 0; overflow-x:auto; text-align:center;
+}
+
+/* ---------- misc ---------- */
+.kv{display:grid; grid-template-columns:auto 1fr; gap:.4rem 1.2rem; font-size:.92rem; margin:1.2rem 0; max-width:66ch}
+.kv dt{font-family:var(--font-mono); font-size:.8rem; color:var(--ember); font-weight:500}
+.kv dd{margin:0; color:var(--ink-soft)}
+.pathline{font-family:var(--font-mono); font-size:.8rem; color:var(--ink-soft); background:var(--paper-sunk); border:1px solid var(--line); border-radius:6px; padding:.9rem 1.1rem; margin:1.2rem 0; white-space:pre; overflow-x:auto}
+footer{border-top:1px solid var(--line); padding:2.5rem 2rem 4rem; background:var(--paper-sunk)}
+footer .inner{max-width:1240px; margin:0 auto; color:var(--ink-faint); font-size:.85rem; display:flex; flex-wrap:wrap; gap:.6rem 2rem}
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr; gap:1rem; padding:0 1.2rem 4rem}
+  nav.toc{position:static; max-height:none; border-bottom:1px solid var(--line); padding-bottom:1.5rem}
+  .masthead{padding:2.5rem 1.2rem 2rem}
+  body{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <span class="eyebrow">Complete source walkthrough &middot; InterviewForge AI</span>
+    <h1>InterviewForge Field Guide</h1>
+    <p class="lede">Every file, every line, every decision in your resume analyzer — explained from absolute zero. No prior coding knowledge assumed. By the end of this you should be able to open any file in the project, find the exact line that produces a thing you can see on screen, and change it with confidence.</p>
+    <div class="stats">
+      <div class="stat"><b>11</b><span>files you wrote</span></div>
+      <div class="stat"><b>~650</b><span>lines of code</span></div>
+      <div class="stat"><b>4</b><span>AI calls per run</span></div>
+      <div class="stat"><b>1</b><span>external service</span></div>
+      <div class="stat"><b>0</b><span>databases</span></div>
+      <div class="stat"><b>8501</b><span>the only port</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+<nav class="toc">
+  <h2>Foundations</h2>
+  <ol>
+    <li><a href="#start-here">1 &middot; What this actually is</a></li>
+    <li><a href="#basics">2 &middot; The absolute basics</a></li>
+    <li><a href="#stack">3 &middot; The tech stack</a></li>
+  </ol>
+  <h2>How it works</h2>
+  <ol>
+    <li><a href="#bigpicture">4 &middot; The whole journey</a></li>
+    <li><a href="#ports">5 &middot; Ports, servers, "middleware"</a></li>
+    <li><a href="#upload">6 &middot; The file upload system</a></li>
+    <li><a href="#json">7 &middot; Plain text &rarr; JSON</a></li>
+    <li><a href="#complexity">8 &middot; Is there complexity detection?</a></li>
+  </ol>
+  <h2>Every file, line by line</h2>
+  <ol>
+    <li><a href="#f-app" class="sub">app.py</a></li>
+    <li><a href="#f-gemini" class="sub">gemini_service.py</a></li>
+    <li><a href="#f-analyzer" class="sub">analyzer.py</a></li>
+    <li><a href="#f-roadmap" class="sub">roadmap.py</a></li>
+    <li><a href="#f-parser" class="sub">resume_parser.py</a></li>
+    <li><a href="#f-helpers" class="sub">helpers.py</a></li>
+    <li><a href="#f-css" class="sub">style.css</a></li>
+    <li><a href="#f-config" class="sub">config &amp; leftovers</a></li>
+  </ol>
+  <h2>Judgement</h2>
+  <ol>
+    <li><a href="#decisions">10 &middot; Roads not taken</a></li>
+    <li><a href="#cookbook">11 &middot; Change-it-yourself recipes</a></li>
+    <li><a href="#limits">12 &middot; Honest limitations</a></li>
+    <li><a href="#glossary">13 &middot; Glossary</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- ============ 1 ============ -->
+<section id="start-here">
+  <span class="sec-num">Section 1</span>
+  <h2>What this project actually is</h2>
+  <p class="sec-intro">Before a single line of code makes sense, you need the one-paragraph version of what you own.</p>
+
+  <p><strong>InterviewForge AI is a website that only runs on your own computer.</strong> You start it by typing one command in a terminal. That command opens a page in your browser at an address like <code>http://localhost:8501</code>. Nobody else on the internet can see it unless you deliberately publish it somewhere.</p>
+
+  <p>What the website does, start to finish:</p>
+  <ol>
+    <li>You drag a resume file (PDF or Word) into a box on the left.</li>
+    <li>You type the job you want — "Data Scientist", "Frontend Developer" — and pick how experienced you are from a dropdown.</li>
+    <li>You click one button: <strong>🚀 Generate AI Analysis</strong>.</li>
+    <li>The program pulls the plain words out of your file (a PDF is not text — it's a container that <em>holds</em> text, and something has to dig it out).</li>
+    <li>It then sends those words to <strong>Google Gemini</strong> — an AI model running on Google's computers, not yours — four separate times, asking four different questions.</li>
+    <li>It takes the four answers and paints them into a dashboard with four tabs: a score with a radar chart, a resume critique, forty interview questions, and a 90-day study plan.</li>
+  </ol>
+
+  <div class="box why">
+    <span class="tag">The single most important idea</span>
+    <p>This project contains <strong>no artificial intelligence of its own</strong>. There is no machine learning model in your folder, nothing was trained, no algorithm "learns". All the intelligence lives on Google's servers and is rented, one question at a time, over the internet. Your code's real job is: <em>read a file → write a good question → send it → catch the answer → arrange the answer prettily on screen</em>. That is genuinely all of it, and understanding that removes about 80% of the mystery.</p>
+  </div>
+
+  <h3>What it is not</h3>
+  <ul>
+    <li><strong>Not a database app.</strong> Nothing is saved. Refresh the browser and your analysis is gone forever.</li>
+    <li><strong>Not a multi-user product.</strong> There are no accounts, no logins, no separation between people. One person, one laptop, one API key.</li>
+    <li><strong>Not a frontend + backend pair.</strong> There is no React app talking to a Python server. There is one Python script; a tool called Streamlit turns it into both the page and the server at the same time. This surprises people, and it's the key to why the code looks the way it does.</li>
+    <li><strong>Not trained on your data.</strong> Your resume text is sent to Google's API and used to produce an answer; the app itself stores nothing.</li>
+  </ul>
+
+  <h3>The folder, laid out</h3>
+  <div class="pathline">AI resume analyzer/
+├── app.py                  ← the entire user interface (the "frontend")
+├── requirements.txt        ← the shopping list of libraries this project needs
+├── README.md               ← notes for humans; the program never reads this
+├── .env                    ← your secret API key (never shared, never committed)
+├── .env.example            ← a fake copy of .env, safe to share, shows the shape
+├── .gitignore              ← list of files Git must pretend don't exist
+├── assets/
+│   └── style.css           ← colors, fonts, gradients — the paint job
+├── services/               ← the "doing" code: talks to files and to Google
+│   ├── __init__.py         ← empty marker that makes this folder importable
+│   ├── resume_parser.py    ← PDF/DOCX → plain text
+│   ├── gemini_service.py   ← the only file that touches the internet
+│   ├── analyzer.py         ← 3 prompts: analysis, questions, score
+│   └── roadmap.py          ← 1 prompt: the 30/60/90-day plan
+└── utils/                  ← small tools with no opinions about the project
+    ├── __init__.py
+    └── helpers.py          ← rescues JSON out of messy AI replies</div>
+
+  <p>Eleven files you (or the AI that wrote this) authored. The <code>__pycache__</code> folders you may notice are not yours — Python creates them automatically as a speed-up cache and they can be deleted at any moment with zero consequence.</p>
+</section>
+
+<!-- ============ 2 ============ -->
+<section id="basics">
+  <span class="sec-num">Section 2</span>
+  <h2>The absolute basics</h2>
+  <p class="sec-intro">Every term used in the rest of this guide, defined here first, with no jargon leaning on other jargon. Skip anything you already know.</p>
+
+  <h3>Files, folders, and what "running" means</h3>
+  <p>A <strong>file</strong> ending in <code>.py</code> is a plain text file full of Python instructions. Nothing about it is magic — you could open <code>app.py</code> in Notepad. "Running" it means handing that text file to a program called the <strong>Python interpreter</strong>, which reads your instructions <em>top to bottom, one line at a time</em>, and does what each one says. When it reaches the bottom, it stops.</p>
+  <p>A <strong>folder</strong> (also called a directory) is just a container. In this project the folders group code by job: <code>services/</code> holds code that <em>does work</em>, <code>utils/</code> holds tiny reusable helpers, <code>assets/</code> holds non-code files like the stylesheet.</p>
+
+  <h3>Variables</h3>
+  <p>A variable is a labelled box you put a value in so you can use it later.</p>
+  <div class="code-block"><div class="code-head"><span class="code-path">example</span><span class="code-lang">python</span></div><pre><code class="language-python">target_role = "Data Scientist"     # a box named target_role, holding text
+experience_level = "Fresher"       # another box
+</code></pre></div>
+  <p>In your project, <code>target_role</code> in <a href="#f-app">app.py</a> line 55 is exactly this: a box that holds whatever the user typed into the text field.</p>
+
+  <h3>Strings, lists, dictionaries</h3>
+  <ul>
+    <li><strong>String</strong> — text in quotes: <code>"Data Scientist"</code>. Any text at all, including a whole resume.</li>
+    <li><strong>List</strong> — an ordered collection in square brackets: <code>["Student", "Fresher", "Intern"]</code>. Your experience-level dropdown is literally a list (line 60 of app.py).</li>
+    <li><strong>Dictionary</strong> — pairs of <em>key → value</em> in curly braces: <code>{"overall": 85, "technical_skills": 80}</code>. You look things up by name rather than by position: <code>scores["overall"]</code> gives you <code>85</code>. This is the single most important data shape in this whole project, because it is <em>the same shape as JSON</em> (more on that in a moment).</li>
+  </ul>
+
+  <h3>Functions</h3>
+  <p>A function is a named recipe. You define it once, then "call" it as many times as you like. Values you hand in are <strong>arguments</strong>; the value it hands back is what it <strong>returns</strong>.</p>
+  <div class="code-block"><div class="code-head"><span class="code-path">example</span><span class="code-lang">python</span></div><pre><code class="language-python">def greet(name):            # define a recipe called "greet" that takes one ingredient
+    return "Hello " + name  # hand back a new piece of text
+
+message = greet("Anubhav")  # call it; message now holds "Hello Anubhav"
+</code></pre></div>
+  <p>Note the indentation. Python does not use braces to show what's "inside" something — it uses <strong>indentation</strong>, usually four spaces. Everything indented under <code>def greet(name):</code> belongs to that function. Get the indentation wrong and the program genuinely means something different. This is Python's most famous quirk.</p>
+
+  <h3>Classes and objects</h3>
+  <p>A <strong>class</strong> is a blueprint. An <strong>object</strong> is one thing built from that blueprint. <code>GeminiClient</code> in <a href="#f-gemini">gemini_service.py</a> is a blueprint describing "something that knows how to talk to Google's AI". The line <code>client = GeminiClient()</code> builds one actual talker from that blueprint and puts it in a box called <code>client</code>.</p>
+  <p>Inside a class, <code>self</code> means "this particular object". <code>self.client</code> means "the client belonging to <em>this</em> GeminiClient", not some other one. And <code>__init__</code> is the special recipe that runs automatically at the moment an object is built — the setup routine.</p>
+
+  <h3>Imports and libraries</h3>
+  <p>Nobody writes everything from scratch. A <strong>library</strong> (or package) is code someone else wrote and published; you install it and use it. <code>import</code> is how you pull it in.</p>
+  <div class="code-block"><div class="code-head"><span class="code-path">app.py lines 1&ndash;10</span><span class="code-lang">python</span></div><pre><code class="language-python">import streamlit as st                        # pull in Streamlit, nickname it "st"
+from services.resume_parser import ResumeParser  # pull ONE thing out of one of your files
+</code></pre></div>
+  <p><code>import x as y</code> means "import x but let me call it y" — everyone nicknames Streamlit <code>st</code> because it's typed hundreds of times. <code>from a.b import C</code> means "reach into folder <code>a</code>, file <code>b</code>, and grab just <code>C</code>".</p>
+
+  <h3>pip, requirements.txt, and virtual environments</h3>
+  <p><strong>pip</strong> is Python's installer. <code>pip install streamlit</code> downloads Streamlit onto your machine. <strong>requirements.txt</strong> is a shopping list so that anyone (including future you on a new laptop) can install everything in one command: <code>pip install -r requirements.txt</code>.</p>
+  <p>A <strong>virtual environment</strong> (a <code>venv</code> folder) is a private toolbox for one project, so Project A can use Streamlit 1.30 while Project B uses 1.42 without them fighting. Your project has none right now — the libraries are installed globally on your machine. That works fine for a solo project; it only becomes a problem when two projects want different versions of the same library.</p>
+
+  <h3>JSON — the single most important format here</h3>
+  <p>JSON stands for JavaScript Object Notation. Forget the name. It is <strong>a way of writing structured data as plain text</strong> so two different programs — possibly written in different languages, running on different continents — can agree on what the data means.</p>
+  <div class="code-block"><div class="code-head"><span class="code-path">what JSON looks like</span><span class="code-lang">json</span></div><pre><code class="language-json">{
+  "summary": "Strong Python fundamentals, thin on deployment experience.",
+  "strengths": ["Clean project structure", "Good SQL depth"],
+  "scores": { "overall": 72, "technical_skills": 68 }
+}</code></pre></div>
+  <p>Rules: curly braces make an object (key → value pairs), square brackets make a list, keys are always in double quotes, text values are in double quotes, numbers are bare. That's basically it.</p>
+  <div class="box">
+    <span class="tag">Why this matters so much</span>
+    <p>A Python dictionary and a JSON object are the <em>same idea in two costumes</em>. <code>json.loads(text)</code> reads JSON text and hands you a Python dictionary. That one function is the bridge between "the AI sent me some characters" and "I have real data I can display". Everything in section 7 is about that bridge.</p>
+  </div>
+
+  <h3>APIs and HTTP requests</h3>
+  <p>An <strong>API</strong> is a doorway one program opens so other programs can ask it for things. Google runs an API for Gemini. Your program walks up to that doorway, hands over a written question plus a key proving you're allowed to ask, and receives a written answer.</p>
+  <p>The delivery mechanism is <strong>HTTPS</strong> — the same protocol your browser uses. A <strong>request</strong> goes out (containing your prompt, encoded as JSON), a <strong>response</strong> comes back (containing the AI's answer, also JSON). "S" means encrypted in transit, so nobody between you and Google can read your resume text.</p>
+
+  <h3>Environment variables and .env</h3>
+  <p>Your Gemini API key is a password. If you typed it directly into <code>gemini_service.py</code> and pushed that to GitHub, a bot would find it within minutes and spend your quota. So instead the key lives in a separate file named <code>.env</code>, which <code>.gitignore</code> tells Git to never upload. At startup, <code>load_dotenv()</code> reads that file and loads the key into the program's memory, where <code>os.getenv("GEMINI_API_KEY")</code> can fetch it.</p>
+
+  <h3>try / except — how Python survives mistakes</h3>
+  <p>Some operations can fail: a PDF might be corrupt, the internet might drop, Google might be overloaded. <code>try:</code> means "attempt this". <code>except Exception as e:</code> means "if it blew up, don't crash the whole program — run this instead, and put the error object in a box called <code>e</code>". <code>raise</code> means "deliberately throw an error upward for someone else to catch". Your project uses this pattern in every single service file.</p>
+
+  <h3>Decorators</h3>
+  <p>A line starting with <code>@</code> directly above a function is a <strong>decorator</strong> — a wrapper that changes how that function behaves without editing its insides. <code>@st.cache_resource</code> above <code>get_services()</code> in app.py means "run this once and remember the result; on later runs, hand back the same thing instead of doing the work again."</p>
+
+  <h3>f-strings</h3>
+  <p>A string with an <code>f</code> in front lets you drop variables straight into the text using curly braces: <code>f"Targeting: {target_role}"</code> becomes <code>"Targeting: Data Scientist"</code>. Every AI prompt in this project is built with a multi-line f-string. One gotcha you'll see in <code>analyzer.py</code>: because <code>{</code> already means "insert a variable", writing a literal curly brace inside an f-string requires doubling it — <code>{{</code> and <code>}}</code>. That's why the JSON examples inside those prompts look strangely doubled.</p>
+</section>
+
+<!-- ============ 3 ============ -->
+<section id="stack">
+  <span class="sec-num">Section 3</span>
+  <h2>The tech stack, one line at a time</h2>
+  <p class="sec-intro">Seven libraries. Here is what each one is for, and what would break if you removed it.</p>
+
+  <div class="code-block"><div class="code-head"><span class="code-path">requirements.txt</span><span class="code-lang">text</span></div><pre><code class="language-plaintext">streamlit&gt;=1.30.0
+google-genai&gt;=1.0.0
+PyPDF2&gt;=3.0.0
+python-docx&gt;=1.1.0
+pandas&gt;=2.0.0
+plotly&gt;=5.18.0
+python-dotenv&gt;=1.0.0</code></pre></div>
+
+  <p>The <code>&gt;=</code> means "this version <em>or newer</em>". It's a compromise: you get bug fixes automatically, but a future major release could theoretically break something. Pinning exact versions (<code>==1.30.0</code>) is safer for reproducibility, looser is friendlier for a personal project.</p>
+
+  <div class="table-scroll"><table>
+    <thead><tr><th>Library</th><th>What it does here</th><th>If you deleted it</th></tr></thead>
+    <tbody>
+      <tr><td class="term">streamlit</td><td>The entire app framework. Turns Python function calls into a real web page: buttons, file uploaders, tabs, charts, layout. Also runs the web server.</td><td>There is no app. This is the foundation.</td></tr>
+      <tr><td class="term">google-genai</td><td>Google's official SDK for Gemini. Handles authentication, building the HTTPS request, retries at the transport level, and parsing Google's reply. Used only in <code>gemini_service.py</code>.</td><td>No AI. Every tab would be empty.</td></tr>
+      <tr><td class="term">PyPDF2</td><td>Opens PDF files and pulls out the embedded text layer, page by page.</td><td>PDF resumes fail; DOCX still works.</td></tr>
+      <tr><td class="term">python-docx</td><td>Opens Word <code>.docx</code> files and walks their paragraphs. (Note: the import is <code>from docx import Document</code> — the install name and import name differ, which trips up everyone once.)</td><td>DOCX resumes fail; PDF still works.</td></tr>
+      <tr><td class="term">pandas</td><td><strong>Nothing.</strong> It is listed here but never imported anywhere in the codebase. Almost certainly a leftover from an earlier plan to show data tables.</td><td>Nothing breaks. It's dead weight — a large library downloaded for no reason.</td></tr>
+      <tr><td class="term">plotly</td><td>Draws the interactive radar chart on the Dashboard tab. Imported in app.py as <code>plotly.graph_objects as go</code>.</td><td>The app crashes on line 4 (the import) unless you also remove the chart code.</td></tr>
+      <tr><td class="term">python-dotenv</td><td>Reads the <code>.env</code> file at startup and loads <code>GEMINI_API_KEY</code> into the environment.</td><td>The key isn't found, <code>GeminiClient</code> raises a ValueError, and you'd see "Failed to initialize AI services".</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="box try">
+    <span class="tag">Safe cleanup you could do today</span>
+    <p>Delete the <code>pandas&gt;=2.0.0</code> line from requirements.txt. Nothing imports it. Verified by searching the whole project for the word "pandas" — the only hit is that one line in the shopping list.</p>
+  </div>
+</section>
+
+<!-- ============ 4 ============ -->
+<section id="bigpicture">
+  <span class="sec-num">Section 4</span>
+  <h2>The whole journey, from click to dashboard</h2>
+  <p class="sec-intro">One button press sets off a chain of about fourteen steps across two networks. Here is the entire chain.</p>
+
+  <h3>The map</h3>
+  <pre class="mermaid">flowchart TD
+    A["Your browser<br/>localhost:8501"] -->|"1. file bytes + typed text"| B["Streamlit server<br/>(the python process running app.py)"]
+    B -->|"2. in-memory file object"| C["ResumeParser.extract_text()"]
+    C -->|"3. plain text string"| D["ResumeAnalyzer / LearningRoadmap<br/>(build the prompt with an f-string)"]
+    D -->|"4. one big prompt string"| E["GeminiClient.generate_json()"]
+    E -->|"5. HTTPS request, JSON body, port 443"| F["Google Gemini API<br/>(Google's servers)"]
+    F -->|"6. HTTPS response, JSON body"| E
+    E -->|"7. raw reply text"| G["extract_json_from_text()"]
+    G -->|"8. python dictionary"| H["st.session_state<br/>(memory that survives reruns)"]
+    H -->|"9. st.* draw calls"| B
+    B -->|"10. re-rendered page over WebSocket"| A</pre>
+
+  <h3>The same thing as a numbered story</h3>
+  <ol>
+    <li><strong>You run <code>streamlit run app.py</code>.</strong> Streamlit starts a small web server on your machine, listening on port 8501, and opens your browser to it.</li>
+    <li><strong>Streamlit executes app.py top to bottom.</strong> Every <code>st.something()</code> call it meets adds an element to the page description it's building. When it finishes, it ships that description to the browser.</li>
+    <li><strong>You upload a resume.</strong> The browser sends the raw bytes up to the Streamlit server, which holds them in memory as an object (see <a href="#upload">section 6</a>).</li>
+    <li><strong>You type a role, pick a level, click the button.</strong> Each of those interactions makes Streamlit <em>re-run the entire script from line 1</em>. This is the single strangest thing about Streamlit and it explains almost every design choice in app.py.</li>
+    <li><strong>On the run where the button was clicked</strong>, the variable <code>analyze_btn</code> is <code>True</code>, so execution enters the <code>if analyze_btn:</code> block on line 70.</li>
+    <li><strong>Guard checks run first</strong> (lines 71&ndash;76): no file? no role? services broken? Each shows a red error and stops there.</li>
+    <li><strong>Text extraction</strong> (line 80): <code>ResumeParser.extract_text()</code> opens the in-memory file, detects PDF vs DOCX from the filename, and returns one long string of every word in your resume.</li>
+    <li><strong>AI call #1 — analysis</strong> (line 86): builds a prompt containing your resume text, the target role, and the level; asks for strengths, weaknesses, missing skills, recruiter feedback.</li>
+    <li><strong>AI call #2 — scoring</strong> (line 89): a separate prompt asking for five numbers 0&ndash;100 plus improvement suggestions.</li>
+    <li><strong>AI call #3 — interview questions</strong> (line 93): asks for 10 questions in each of 4 categories.</li>
+    <li><strong>AI call #4 — roadmap</strong> (line 96): takes the <em>missing skills list produced by call #1</em> and asks for a 30/60/90-day plan to close those gaps. This is the only call that depends on a previous call's output.</li>
+    <li><strong>Each reply is rescued into a Python dictionary</strong> by <code>extract_json_from_text()</code>.</li>
+    <li><strong>The four dictionaries are stored in <code>st.session_state</code></strong> (lines 100&ndash;103) so they survive all future re-runs.</li>
+    <li><strong>The script continues to line 109</strong>, sees that <code>'analysis'</code> now exists in session state, and draws the four-tab dashboard. Every tab switch after that re-runs the whole script again — but now the data is already in memory, so no AI calls happen and it feels instant.</li>
+  </ol>
+
+  <div class="box why">
+    <span class="tag">Why Streamlit re-runs everything</span>
+    <p>In a normal website, JavaScript changes small pieces of the page in place. Streamlit deliberately threw that model away: instead of tracking what changed, it just runs your whole script again and diffs the result. That's why the code reads like a simple top-to-bottom script with no event handlers or callbacks anywhere. The price you pay is that <em>any</em> variable not stored in <code>st.session_state</code> is wiped and rebuilt on every single interaction — including expensive things like AI results. That's the entire reason lines 100&ndash;103 exist.</p>
+  </div>
+
+  <div class="box note">
+    <span class="tag">A quirk worth knowing about</span>
+    <p>Look carefully at lines 86&ndash;97. Each <code>progress_bar.progress(N, text=...)</code> fires <em>after</em> a step finishes, but its label describes the step that's about to start. So when the bar reads "Generating Readiness Score" at 25%, the analysis has just completed and the score request hasn't been sent yet. It's forward-looking rather than backward-looking. Not a bug — but if you ever wonder why the last label ("Analysis Complete!") appears while a spinner is still spinning, that's why.</p>
+  </div>
+
+  <h3>How long does it take?</h3>
+  <p>Four sequential requests, each typically 3&ndash;10 seconds of Gemini thinking time, <em>plus</em> a hard-coded minimum 3-second gap between calls (<code>CALL_SPACING</code>), plus PDF parsing. Realistically 20&ndash;50 seconds per full run. Nothing runs in parallel — see <a href="#decisions">section 10</a> for why that was a reasonable choice and what it would take to change.</p>
+</section>
+
+<!-- ============ 5 ============ -->
+<section id="ports">
+  <span class="sec-num">Section 5</span>
+  <h2>Ports, servers, and the "middleware" question</h2>
+  <p class="sec-intro">You asked what port the middleware listens on and how the JSON request reaches it. The honest answer reshapes how you should picture this app — so here it is in full.</p>
+
+  <h3>There is no middleware in this project</h3>
+  <p>"Middleware" usually means a layer sitting between a frontend and a backend — an Express server, a Flask API, an nginx proxy. <strong>This project has none of that.</strong> There is exactly one program: the Python process started by <code>streamlit run app.py</code>. It is simultaneously the web server, the UI renderer, and the business logic. Nothing you wrote listens for incoming API requests.</p>
+
+  <h3>The two networks in play</h3>
+  <div class="table-scroll"><table>
+    <thead><tr><th></th><th>Network A: browser ↔ your app</th><th>Network B: your app ↔ Google</th></tr></thead>
+    <tbody>
+      <tr><td class="term">Who talks</td><td>Chrome ↔ the Streamlit server</td><td>The <code>google-genai</code> library ↔ Gemini's API</td></tr>
+      <tr><td class="term">Where</td><td><code>localhost</code> — traffic never leaves your machine</td><td>The public internet, to <code>generativelanguage.googleapis.com</code></td></tr>
+      <tr><td class="term">Port</td><td><strong>8501</strong> (Streamlit's default; this project never overrides it)</td><td><strong>443</strong>, the standard HTTPS port — outbound only, nothing listens on your side</td></tr>
+      <tr><td class="term">Protocol</td><td>HTTP for the first page load, then a persistent <strong>WebSocket</strong> for all live updates</td><td>HTTPS request/response, one round trip per call</td></tr>
+      <tr><td class="term">Payload</td><td>Streamlit's own internal protocol (Protocol Buffers). You never see or write this.</td><td><strong>JSON</strong> — this is the JSON you were asking about</td></tr>
+      <tr><td class="term">Who wrote the code</td><td>The Streamlit team</td><td>Google's SDK builds the request; you supply the prompt text</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Why port 8501, and how to change it</h3>
+  <p>Streamlit's built-in server (it uses Tornado, a Python web server library, under the hood) defaults to 8501. Your project contains no <code>.streamlit/config.toml</code>, so the default stands. Two ways to change it:</p>
+  <div class="code-block"><div class="code-head"><span class="code-path">terminal</span><span class="code-lang">bash</span></div><pre><code class="language-bash"># one-off, for this run only
+streamlit run app.py --server.port 8600</code></pre></div>
+  <p>Or create a file at <code>.streamlit/config.toml</code> next to app.py:</p>
+  <div class="code-block"><div class="code-head"><span class="code-path">.streamlit/config.toml (does not exist yet)</span><span class="code-lang">toml</span></div><pre><code class="language-ini">[server]
+port = 8600
+maxUploadSize = 50   # megabytes; the default is 200</code></pre></div>
+
+  <h3>What the outbound JSON actually looks like</h3>
+  <p>You never write this JSON by hand. When <code>gemini_service.py</code> calls <code>self.client.models.generate_content(model=..., contents=prompt, config=...)</code>, the Google SDK converts those Python arguments into an HTTPS request whose body is roughly this shape:</p>
+  <div class="code-block"><div class="code-head"><span class="code-path">conceptual — what the SDK sends for you</span><span class="code-lang">json</span></div><pre><code class="language-json">POST /v1beta/models/gemini-3.7-flash:generateContent
+Host: generativelanguage.googleapis.com
+x-goog-api-key: &lt;your GEMINI_API_KEY&gt;
+Content-Type: application/json
+
+{
+  "contents": [
+    { "parts": [ { "text": "You are an expert technical recruiter...\n\nResume text:\nANUBHAV ...\n\nCRITICAL INSTRUCTION: Your entire response MUST be valid JSON..." } ] }
+  ],
+  "generationConfig": {
+    "responseMimeType": "application/json"
+  }
+}</code></pre></div>
+  <p>And the reply that comes back is JSON too — with the model's actual answer buried inside it as a string. The SDK unwraps that for you and hands your code just the string, which is what <code>response.text</code> is on line 84 of gemini_service.py.</p>
+
+  <div class="box">
+    <span class="tag">The mental correction</span>
+    <p>The JSON in this project is <em>not</em> traffic between your frontend and your backend — you don't have those as separate pieces. The JSON is traffic between <strong>your one program and Google</strong>. Your entire codebase sits on the client side of that relationship.</p>
+  </div>
+
+  <h3>Could someone else on your Wi-Fi open the app?</h3>
+  <p>By default Streamlit binds to your machine and prints both a Local URL and a Network URL. If you use the network URL, other devices on the same Wi-Fi can reach it — and they would be spending <em>your</em> API key with no login in the way. For a tool with no authentication, treat it as a localhost-only app unless you deliberately add auth first.</p>
+</section>
+
+<!-- ============ 6 ============ -->
+<section id="upload">
+  <span class="sec-num">Section 6</span>
+  <h2>The file upload system, in forensic detail</h2>
+  <p class="sec-intro">You asked for every minute detail of the resume upload box. It is produced by a single line of Python — but that line hides a five-stage journey. Here is all of it.</p>
+
+  <h3>The line that creates it</h3>
+  <div class="code-block"><div class="code-head"><span class="code-path">app.py line 52</span><span class="code-lang">python</span></div><pre><code class="language-python">uploaded_file = st.file_uploader("Upload PDF or DOCX", type=['pdf', 'docx'])</code></pre></div>
+  <p>That's the whole upload system as far as your code is concerned. Three pieces:</p>
+  <ul>
+    <li><code>"Upload PDF or DOCX"</code> — the label printed above the box. <strong>Change this string to change that text.</strong></li>
+    <li><code>type=['pdf', 'docx']</code> — the allowed extensions. This does two things: it sets the <code>accept</code> attribute on the underlying HTML file input (so the operating system's file picker greys out other files), and it makes Streamlit reject a mismatched file with its own red error before your code ever sees it.</li>
+    <li><code>uploaded_file =</code> — the box that catches the result. It holds <code>None</code> when nothing is uploaded, and an <code>UploadedFile</code> object once something is.</li>
+  </ul>
+
+  <h3>Stage 1 — the browser side</h3>
+  <p>Streamlit renders a drag-and-drop panel containing a hidden standard HTML <code>&lt;input type="file"&gt;</code>. Clicking "Browse files" opens your operating system's native file dialog. Dropping a file onto the panel uses the browser's drag-and-drop API. Either way the browser ends up holding a <code>File</code> object — a handle to bytes sitting on your disk.</p>
+  <p>The visible caption "Limit 200MB per file • PDF, DOCX" is generated by Streamlit from two sources: the <code>type</code> list you passed, and the <code>server.maxUploadSize</code> config value, which defaults to 200 (megabytes) because your project has no config file overriding it.</p>
+
+  <h3>Stage 2 — bytes travel to the server</h3>
+  <p>Streamlit's JavaScript uploads the raw bytes to the Python process over a separate background HTTP POST — not over the WebSocket that carries normal UI updates. The upload is tagged with the session ID and a unique file ID so the server knows which browser tab and which widget it belongs to. A progress indicator appears for large files. This entire exchange is internal Streamlit machinery; there is no code in your project involved, and no endpoint you can call yourself.</p>
+
+  <h3>Stage 3 — the UploadedFile object</h3>
+  <p>Once the bytes arrive, Streamlit re-runs your script, and this time <code>uploaded_file</code> holds an <strong>UploadedFile</strong> object. Two facts about it matter enormously:</p>
+  <ul>
+    <li><strong>It lives in RAM, not on disk.</strong> Technically it subclasses <code>io.BytesIO</code> — a chunk of memory that pretends to be a file. Your resume is never written to your hard drive by this app. When the session ends, it evaporates.</li>
+    <li><strong>It behaves exactly like an opened file.</strong> It supports <code>.read()</code>, <code>.seek()</code>, and iteration. That's why PyPDF2 and python-docx accept it directly without complaining — they can't tell the difference between this and a real file handle.</li>
+  </ul>
+  <p>It also carries metadata: <code>.name</code> (the original filename, used on line 80 to decide PDF vs DOCX), <code>.size</code> (bytes), and <code>.type</code> (the MIME type the browser guessed).</p>
+
+  <h3>Stage 4 — extension detection</h3>
+  <div class="code-block"><div class="code-head"><span class="code-path">services/resume_parser.py lines 17&ndash;25</span><span class="code-lang">python</span></div><pre><code class="language-python">ext = filename.split('.')[-1].lower()
+
+if ext == 'pdf':
+    return ResumeParser._extract_from_pdf(file_obj)
+elif ext in ['doc', 'docx']:
+    return ResumeParser._extract_from_docx(file_obj)
+else:
+    raise ValueError(f"Unsupported file format: {ext}. Please upload PDF or DOCX.")</code></pre></div>
+  <p>Read <code>filename.split('.')[-1].lower()</code> right to left: <code>split('.')</code> chops <code>"Anubhav_Resume.final.pdf"</code> into <code>["Anubhav_Resume", "final", "pdf"]</code>; <code>[-1]</code> takes the last piece (negative indexing counts from the end); <code>.lower()</code> makes <code>"PDF"</code> and <code>"pdf"</code> identical. Robust against multiple dots and any capitalisation.</p>
+  <div class="box warn">
+    <span class="tag">Two real weaknesses here</span>
+    <p><strong>1.</strong> <code>'doc'</code> is accepted in the elif branch, but old-style <code>.doc</code> files are a completely different binary format that <code>python-docx</code> cannot read. If a <code>.doc</code> ever got through, it would fail with a confusing parsing error. (Streamlit's own <code>type=['pdf','docx']</code> filter blocks it first, so this branch is currently unreachable — but it's a trap waiting for anyone who widens that list.)</p>
+    <p><strong>2.</strong> Validation looks at the <em>filename only</em>, never the file's contents. Rename <code>notes.txt</code> to <code>notes.pdf</code> and the code will happily hand it to PyPDF2, which throws a raw low-level error. Proper validation would check the first few bytes — every real PDF starts with the characters <code>%PDF</code>.</p>
+  </div>
+
+  <h3>Stage 5 — text extraction</h3>
+  <p>For PDFs, PyPDF2 opens the in-memory buffer, loops over every page, and calls <code>page.extract_text()</code>, gluing the results together with newlines. For DOCX, python-docx loads the document and walks <code>doc.paragraphs</code>, appending each paragraph's text.</p>
+  <div class="box warn">
+    <span class="tag">The big limitation nobody warns you about</span>
+    <p>PDFs come in two flavours. A PDF <em>exported</em> from Word or LaTeX contains a real text layer — extraction works perfectly. A PDF that is a <em>scan or photo</em> of a page contains only an image; there is no text to extract, and <code>extract_text()</code> returns empty strings for every page. Your code catches this on line 41&ndash;42 and raises <em>"PDF appears to be empty or contains only unextractable images."</em> Reading image-based PDFs would require OCR (optical character recognition, e.g. Tesseract) — a much heavier dependency this project deliberately does not carry.</p>
+    <p>Similarly, python-docx reads only <code>doc.paragraphs</code>. Text inside <strong>tables</strong>, headers, footers or text boxes is silently skipped. Many resume templates put contact details or skills in tables — so a table-heavy DOCX may lose real content without any error.</p>
+  </div>
+
+  <h3>What the AI eventually receives</h3>
+  <p>Every bit of formatting is gone. Fonts, columns, bullets, colours, spacing — none of it survives. The AI sees one long plain string, roughly:</p>
+  <div class="code-block"><div class="code-head"><span class="code-path">what resume_text looks like</span><span class="code-lang">text</span></div><pre><code class="language-plaintext">ANUBHAV KUMAR
+anubhav@example.com | +91 90000 00000 | github.com/anubhav
+EDUCATION
+B.Tech Computer Science, 2022-2026, CGPA 8.4
+SKILLS
+Python, SQL, Pandas, Streamlit, Git
+PROJECTS
+AI Resume Analyzer - Built a Streamlit app that ...</code></pre></div>
+  <p>This has a practical consequence: when the AI comments on "resume quality", it is judging <em>wording and content</em>, and cannot see your layout, your font choices, or whether it fits on one page. It's guessing about visual quality from text alone.</p>
+</section>
+
+<!-- ============ 7 ============ -->
+<section id="json">
+  <span class="sec-num">Section 7</span>
+  <h2>Turning plain text into JSON</h2>
+  <p class="sec-intro">You asked what algorithm converts plain text into a JSON that satisfies the required format. There are three distinct mechanisms stacked on top of each other, and only one of them is code you own.</p>
+
+  <h3>Mechanism 1 — showing the AI the shape you want (prompt engineering)</h3>
+  <p>The "conversion" starts before anything is sent. Your prompt literally <em>contains a drawing of the JSON you want back</em>:</p>
+  <div class="code-block"><div class="code-head"><span class="code-path">services/analyzer.py lines 17&ndash;25</span><span class="code-lang">python</span></div><pre><code class="language-python">Provide your response in JSON format exactly matching this structure:
+{{
+    "summary": "A 3-4 sentence professional summary of the candidate's fit.",
+    "strengths": ["Strength 1", "Strength 2", "Strength 3"],
+    "weaknesses": ["Weakness 1", "Weakness 2"],
+    "missing_skills": ["Skill 1", "Skill 2", "Skill 3"],
+    "recruiter_feedback": "A direct, constructive paragraph ...",
+    "reasoning": "Explain why these specific strengths ..."
+}}</code></pre></div>
+  <p>Those doubled braces <code>{{ }}</code> are the f-string escape from section 2 — Python prints them as single braces. So what actually reaches Gemini is clean JSON with placeholder values that double as instructions ("A 3-4 sentence professional summary...").</p>
+  <p>This technique is called <strong>schema-by-example</strong>. There is no validation, no type system, no enforcement. You are showing a very capable pattern-matcher an example and trusting it to imitate the shape while replacing the contents. It works remarkably well and is fragile in exactly the way you'd expect: nothing <em>guarantees</em> the model returns those exact key names.</p>
+
+  <h3>Mechanism 2 — making Google enforce JSON at their end</h3>
+  <div class="code-block"><div class="code-head"><span class="code-path">services/gemini_service.py lines 95&ndash;104</span><span class="code-lang">python</span></div><pre><code class="language-python">json_prompt = prompt + "\n\nCRITICAL INSTRUCTION: Your entire response MUST be a valid JSON object. Do not include markdown formatting like ```json or any conversational text outside the JSON block."
+
+response = self.client.models.generate_content(
+    model=model_name,
+    contents=json_prompt,
+    config=types.GenerateContentConfig(
+        response_mime_type="application/json"
+    )
+)</code></pre></div>
+  <p>Two belts for the same trousers:</p>
+  <ul>
+    <li><strong>The appended sentence</strong> is more prompt engineering — a plain-English plea, bolted on to every JSON request in one place instead of being repeated inside all four prompts.</li>
+    <li><strong><code>response_mime_type="application/json"</code></strong> is different in kind. This is a real feature of Google's API called <em>JSON mode</em> / structured output. It doesn't ask nicely; it changes how the model generates text on Google's servers, constraining the output so that it parses as JSON. This is the closest thing to a guarantee in the whole pipeline — and note that it guarantees <em>valid JSON</em>, not <em>the JSON keys you asked for</em>.</li>
+  </ul>
+
+  <div class="box why">
+    <span class="tag">Why not go further?</span>
+    <p>Gemini also supports <code>response_schema</code>, where you hand over a formal schema (or a Python class) and the API guarantees the exact fields and types. This project doesn't use it — instead it draws the shape in the prompt and hopes. That's simpler to write and to read, but it's the reason a mismatched key silently produces a blank section in your dashboard instead of a loud error. See <a href="#decisions">section 10</a>.</p>
+  </div>
+
+  <h3>Mechanism 3 — the rescue parser you actually own</h3>
+  <p>This is the only real conversion algorithm in the codebase, and it lives in <code>utils/helpers.py</code>. Its job: take whatever text came back and get a Python dictionary out of it by any means available.</p>
+
+  <div class="code-block"><div class="code-head"><span class="code-path">utils/helpers.py lines 4&ndash;34</span><span class="code-lang">python</span></div><pre><code class="language-python">def extract_json_from_text(text: str) -&gt; dict:
+    try:
+        # First try direct parsing
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+
+    # Try to find JSON block in markdown
+    json_match = re.search(r'```json\s*(.*?)\s*```', text, re.DOTALL)
+    if json_match:
+        try:
+            return json.loads(json_match.group(1))
+        except json.JSONDecodeError:
+            pass
+
+    # Try to find anything that looks like a JSON object or array
+    try:
+        match = re.search(r'(\{.*\}|\[.*\])', text, re.DOTALL)
+        if match:
+            return json.loads(match.group(1))
+    except Exception:
+        pass
+
+    print("Failed to parse JSON from response.")
+    return {}</code></pre></div>
+
+  <pre class="mermaid">flowchart TD
+    S["Raw text from Gemini"] --> T1{"json.loads(text)<br/>works?"}
+    T1 -->|yes| OK["return dictionary"]
+    T1 -->|no| T2{"contains a<br/>```json ... ``` block?"}
+    T2 -->|yes, and it parses| OK
+    T2 -->|no| T3{"regex finds first { to last }<br/>or first [ to last ] ?"}
+    T3 -->|yes, and it parses| OK
+    T3 -->|no| F["print a warning<br/>return empty dict {}"]</pre>
+
+  <h4>Tier 1 — try it straight</h4>
+  <p><code>json.loads(text)</code> is Python's built-in JSON parser (part of the standard library, implemented in C for speed). You did not write a parser and you should never need to. If Gemini obeyed <code>response_mime_type</code>, this succeeds on the first try, which it does the vast majority of the time. Note it catches <em>only</em> <code>json.JSONDecodeError</code> — the specific "this text isn't JSON" error. A different failure would still crash, which is correct behaviour: you only want to swallow the error you actually planned for.</p>
+
+  <h4>Tier 2 — dig it out of a markdown code fence</h4>
+  <p>Language models are trained on a lot of documentation, so their instinct is to wrap code in triple backticks:</p>
+  <div class="code-block"><div class="code-head"><span class="code-path">a reply tier 1 chokes on</span><span class="code-lang">text</span></div><pre><code class="language-plaintext">Here is the analysis you requested:
+
+```json
+{"summary": "Solid fundamentals...", "strengths": ["SQL"]}
+```</code></pre></div>
+  <p>The regular expression <code>r'```json\s*(.*?)\s*```'</code> reads as: find three backticks followed by the word json, then any whitespace, then <strong>capture</strong> everything up to the next three backticks. Piece by piece:</p>
+  <div class="kv">
+    <dt>r'...'</dt><dd>a "raw string" — backslashes mean themselves, not escape codes. Always used for regex.</dd>
+    <dt>\s*</dt><dd>zero or more whitespace characters (spaces, tabs, newlines).</dd>
+    <dt>( )</dt><dd>a capture group — the part you want to keep, retrieved later with <code>.group(1)</code>.</dd>
+    <dt>.*?</dt><dd>any characters, <em>lazily</em> — the <code>?</code> means stop at the <em>first</em> closing fence rather than the last.</dd>
+    <dt>re.DOTALL</dt><dd>normally <code>.</code> refuses to match newlines; this flag lets it, which is essential since JSON spans many lines.</dd>
+  </div>
+
+  <h4>Tier 3 — the brute-force grab</h4>
+  <p>For a reply that has no fence but has chatter around the JSON — <em>"Sure! {"summary": ...} Let me know if you need more."</em> — the pattern <code>r'(\{.*\}|\[.*\])'</code> finds the first <code>{</code> and, because <code>.*</code> here is <strong>greedy</strong> (no <code>?</code>), stretches all the way to the <em>last</em> <code>}</code> in the whole text. The <code>|</code> means "or", so it also handles a reply that is a JSON array instead of an object.</p>
+  <p>Greedy is the right call here: JSON objects contain nested objects, so stopping at the first closing brace would slice the structure in half. The risk is the mirror image — if the model wrote a sentence containing a stray <code>}</code> after the JSON, the grab would include the junk and parsing would fail. Tier 3 is a heuristic, not a guarantee, and that's an acceptable trade for a last resort.</p>
+
+  <h4>Tier 4 — give up quietly</h4>
+  <p>If all three fail, the function prints a warning <em>to the terminal</em> (not to the browser) and returns <code>{}</code> — an empty dictionary.</p>
+  <div class="box warn">
+    <span class="tag">The failure mode this creates</span>
+    <p>An empty dictionary means every later <code>.get('summary', '')</code> in app.py returns its default. The app does not crash — it renders a dashboard with a score of 0/100, empty strength lists, and blank text. To the user this looks like the AI thought they were terrible, when in fact the reply was unparseable. Nothing on screen says "something went wrong". If you improve one thing in this project, make this function raise a clear error (or set a flag app.py can show as a red banner) instead of returning <code>{}</code>.</p>
+  </div>
+
+  <h3>So which is "the algorithm"?</h3>
+  <p>Put plainly, for your own explanation to anyone who asks:</p>
+  <ol>
+    <li>The <strong>prompt</strong> converts your intent into text that contains an example of the desired JSON. That's not an algorithm, it's a written instruction.</li>
+    <li>The <strong>Gemini model plus Google's JSON mode</strong> converts that instruction into JSON-shaped text. That's a neural network doing constrained token generation on Google's hardware — genuinely the "AI" part, and entirely outside your code.</li>
+    <li>Your <strong><code>extract_json_from_text</code></strong> converts that text into a Python dictionary using a three-tier fallback: strict parse, markdown-fence extraction, greedy brace extraction. That is the algorithm you own, and it's about twenty lines long.</li>
+  </ol>
+</section>
+
+<!-- ============ 8 ============ -->
+<section id="complexity">
+  <span class="sec-num">Section 8</span>
+  <h2>Is there complexity detection? An honest answer</h2>
+  <p class="sec-intro">You asked how the app decides which requests are complex and which are normal. The truthful answer is: it doesn't. But two systems in the code look like that from a distance, and both are worth understanding properly.</p>
+
+  <div class="box warn">
+    <span class="tag">Straight answer</span>
+    <p>There is <strong>no complexity classifier</strong> anywhere in this project. Every run does exactly the same four things in exactly the same order, with the same model chain, regardless of whether your resume is one page or ten, or whether the role is "Intern" or "Principal Engineer". No routing, no tiering, no "use the big model for hard questions". Anyone who told you otherwise was describing a different architecture.</p>
+  </div>
+
+  <h3>What does exist #1 — the model fallback chain</h3>
+  <p>This is probably what got mistaken for complexity routing. It's a <em>reliability</em> mechanism, not a difficulty mechanism.</p>
+  <div class="code-block"><div class="code-head"><span class="code-path">services/gemini_service.py lines 13&ndash;22</span><span class="code-lang">python</span></div><pre><code class="language-python"># Ordered by reliability and speed. If one fails with 503, try the next.
+MODEL_CHAIN = [
+    "gemini-3.7-flash",
+    "gemini-3.6-flash",
+    "gemini-3.5-flash",
+    "gemini-3.5-flash-lite",
+]
+
+# Minimum delay between consecutive API calls (seconds)
+CALL_SPACING = 3</code></pre></div>
+  <p>The list is newest-and-best first, degrading gracefully downward. The app <em>always</em> starts at <code>gemini-3.7-flash</code>. It only moves down the list when a model fails repeatedly with a temporary error. Every entry is a "flash" model — the fast, cheap tier — because these four tasks are text-in/text-out work where response speed matters more than maximum reasoning power.</p>
+
+  <h3>What does exist #2 — transient vs. permanent error detection</h3>
+  <p>This is the one genuine classifier in the codebase. It classifies <em>errors</em>, not requests.</p>
+  <div class="code-block"><div class="code-head"><span class="code-path">services/gemini_service.py lines 52&ndash;72</span><span class="code-lang">python</span></div><pre><code class="language-python">except Exception as e:
+    last_error = e
+    error_str = str(e).lower()
+    is_transient = any(
+        keyword in error_str
+        for keyword in ["503", "429", "500", "unavailable", "quota", "high demand", "overloaded", "capacity"]
+    )
+
+    if is_transient:
+        if attempt &lt; max_retries_per_model - 1:
+            wait_time = 5 * (2 ** attempt)  # 5s, 10s
+            print(f"[GeminiClient] {model_name} attempt {attempt+1} failed (transient), retrying in {wait_time}s...")
+            time.sleep(wait_time)
+            continue
+        else:
+            print(f"[GeminiClient] {model_name} exhausted retries, falling back to next model...")
+            break
+    else:
+        raise</code></pre></div>
+
+  <p>The logic in plain English:</p>
+  <ol>
+    <li>Take the error, turn it into text, lowercase it.</li>
+    <li>Check whether any of eight keywords appears in that text. <code>any(... for ...)</code> is a generator expression — read it as "is at least one of these keywords present?"</li>
+    <li>If yes, this is a <strong>transient</strong> failure — Google is busy, over quota, or wobbling. Worth retrying.</li>
+    <li>If no, it's a <strong>permanent</strong> failure — a malformed request, a bad API key, a safety block. Retrying would fail identically forever, so <code>raise</code> immediately and let the user see it.</li>
+  </ol>
+
+  <h4>The retry maths</h4>
+  <p><code>wait_time = 5 * (2 ** attempt)</code> is <strong>exponential backoff</strong>. <code>**</code> is "to the power of". Attempt 0 waits 5 × 1 = 5s; attempt 1 waits 5 × 2 = 10s. The idea: if a server is overloaded, hammering it immediately makes things worse for everyone; backing off exponentially gives it room to recover. Because <code>max_retries_per_model=2</code>, each model gets two attempts before the chain moves on.</p>
+
+  <h4>The worst case, calculated</h4>
+  <p>4 models × 2 attempts = 8 total attempts. Only the first attempt per model waits (the second attempt's failure breaks out to the next model), so the waiting adds up to roughly 4 × 5s of backoff plus the mandatory 3s spacing before each of the 8 calls ≈ 45 seconds of pure waiting before the chain gives up and raises <em>"All models in fallback chain failed."</em> Then app.py catches that and shows a red error box.</p>
+
+  <h3>What does exist #3 — rate-limit spacing</h3>
+  <div class="code-block"><div class="code-head"><span class="code-path">services/gemini_service.py lines 32&ndash;36</span><span class="code-lang">python</span></div><pre><code class="language-python">def _wait_for_spacing(self):
+    elapsed = time.time() - self._last_call_time
+    if elapsed &lt; self.CALL_SPACING:
+        time.sleep(self.CALL_SPACING - elapsed)</code></pre></div>
+  <p>Before every call, work out how long it's been since the last one. If less than 3 seconds, sleep for the remainder. This is proactive politeness: free-tier Gemini keys have a requests-per-minute cap, and four rapid-fire calls could trip it. The cost is that a full run has at least 9 seconds of deliberate idling baked in.</p>
+
+  <div class="box why">
+    <span class="tag">What "complexity routing" would look like if you added it</span>
+    <p>If you wanted the thing you were imagining, it would be maybe fifteen lines: measure <code>len(resume_text)</code> and inspect the seniority level; if the resume is over, say, 6,000 characters or the level is "Senior"/"Mid-Level", start the chain at a stronger reasoning model (e.g. a Pro-tier model) and fall back to flash; otherwise start at flash. You'd add a second list — <code>HEAVY_CHAIN</code> — and pick which chain to use inside <code>_call_with_fallback</code>. The plumbing is already there; only the decision is missing.</p>
+  </div>
+</section>
+
+<!-- ============ 9 ============ -->
+<section id="files">
+  <span class="sec-num">Section 9</span>
+  <h2>Every file, line by line</h2>
+  <p class="sec-intro">Each file below opens into its complete source, split into logical blocks, with a plain-English explanation of every meaningful line. Blank lines are just visual spacing — Python ignores them entirely — so they aren't listed individually.</p>
+
+<!-- ---------- app.py ---------- -->
+<h3 id="f-app">app.py &mdash; the entire user interface</h3>
+<p><strong>275 lines. This is your frontend.</strong> Every word, colour, button, alert and chart you see on screen is produced here. If you want to change something visible, it is almost certainly in this file (or in <a href="#f-css">style.css</a>).</p>
+
+<details class="file" open>
+  <summary><span class="chip front">frontend</span> app.py &nbsp;·&nbsp; Block A — imports &amp; setup <span class="summary-note">lines 1&ndash;13</span></summary>
+  <div class="body">
+    <div class="code-block"><div class="code-head"><span class="code-path">app.py lines 1&ndash;13</span><span class="code-lang">python</span></div><pre><code class="language-python">import streamlit as st
+import os
+import json
+import plotly.graph_objects as go
+from dotenv import load_dotenv
+
+from services.resume_parser import ResumeParser
+from services.gemini_service import GeminiClient
+from services.analyzer import ResumeAnalyzer
+from services.roadmap import LearningRoadmap
+
+# Load environment variables
+load_dotenv()</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">1</td><td class="cd">import streamlit as st</td><td>Loads the framework that <em>is</em> the app, nicknamed <code>st</code>. Every <code>st.</code> call later comes from here.</td></tr>
+        <tr><td class="ln">2</td><td class="cd">import os</td><td>Python's operating-system toolkit. Used once, on line 25, to build the path to style.css in a way that works on Windows, Mac and Linux.</td></tr>
+        <tr><td class="ln">3</td><td class="cd">import json</td><td><strong>Unused.</strong> Nothing in app.py calls <code>json.</code> anything — the JSON work happens in helpers.py. Harmless leftover; safe to delete.</td></tr>
+        <tr><td class="ln">4</td><td class="cd">import plotly.graph_objects as go</td><td>The charting library, nicknamed <code>go</code>. Used only for the radar chart on lines 156&ndash;171.</td></tr>
+        <tr><td class="ln">5</td><td class="cd">from dotenv import load_dotenv</td><td>Grabs one function out of python-dotenv: the thing that reads your <code>.env</code> file.</td></tr>
+        <tr><td class="ln">7&ndash;10</td><td class="cd">from services.… import …</td><td>Pulls in your own four classes. <code>services.resume_parser</code> means "the file resume_parser.py inside the folder services". These work because <code>services/</code> contains an <code>__init__.py</code>.</td></tr>
+        <tr><td class="ln">12</td><td class="cd"># Load environment variables</td><td>A comment. Everything after <code>#</code> is ignored by Python; it exists purely for humans.</td></tr>
+        <tr><td class="ln">13</td><td class="cd">load_dotenv()</td><td>Reads <code>.env</code> and injects <code>GEMINI_API_KEY</code> into the environment. <strong>Must run before</strong> <code>GeminiClient()</code> on line 35, or the key wouldn't be found yet. Order matters here.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</details>
+
+<details class="file">
+  <summary><span class="chip front">frontend</span> app.py &nbsp;·&nbsp; Block B — page config &amp; stylesheet <span class="summary-note">lines 15&ndash;29</span></summary>
+  <div class="body">
+    <div class="code-block"><div class="code-head"><span class="code-path">app.py lines 15&ndash;29</span><span class="code-lang">python</span></div><pre><code class="language-python"># Streamlit Page Config
+st.set_page_config(
+    page_title="InterviewForge AI",
+    page_icon="⚒️",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# Load CSS
+def load_css():
+    css_path = os.path.join(os.path.dirname(__file__), "assets", "style.css")
+    if os.path.exists(css_path):
+        with open(css_path) as f:
+            st.markdown(f'&lt;style&gt;{f.read()}&lt;/style&gt;', unsafe_allow_html=True)
+load_css()</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">16</td><td class="cd">st.set_page_config(</td><td>Configures the browser tab and overall layout. <strong>Must be the first Streamlit command in the script</strong> — Streamlit throws an error if any other <code>st.</code> call runs before it.</td></tr>
+        <tr><td class="ln">17</td><td class="cd">page_title="InterviewForge AI"</td><td>The text in the browser tab. <strong>Change this to rename the app in the tab.</strong></td></tr>
+        <tr><td class="ln">18</td><td class="cd">page_icon="⚒️"</td><td>The favicon — the little icon in the tab. Any emoji works.</td></tr>
+        <tr><td class="ln">19</td><td class="cd">layout="wide"</td><td>Uses the full browser width. The alternative, <code>"centered"</code>, constrains content to a narrow column. Wide was chosen because a dashboard with side-by-side columns and a radar chart needs the room.</td></tr>
+        <tr><td class="ln">20</td><td class="cd">initial_sidebar_state="expanded"</td><td>The sidebar starts open rather than collapsed — important here, since the sidebar is the only way to start anything.</td></tr>
+        <tr><td class="ln">24</td><td class="cd">def load_css():</td><td>Defines a small function that injects your custom stylesheet.</td></tr>
+        <tr><td class="ln">25</td><td class="cd">css_path = os.path.join(os.path.dirname(__file__), "assets", "style.css")</td><td><code>__file__</code> is the path of app.py itself; <code>os.path.dirname</code> strips off the filename leaving the folder; <code>os.path.join</code> glues on <code>assets/style.css</code> using the right slash for your OS. Result: the stylesheet is found no matter which directory you launch from.</td></tr>
+        <tr><td class="ln">26</td><td class="cd">if os.path.exists(css_path):</td><td>Only proceed if the file is really there — so a missing stylesheet degrades to an unstyled app rather than a crash.</td></tr>
+        <tr><td class="ln">27</td><td class="cd">with open(css_path) as f:</td><td><code>with</code> opens the file and guarantees it gets closed afterwards, even if something fails inside.</td></tr>
+        <tr><td class="ln">28</td><td class="cd">st.markdown(f'&lt;style&gt;{f.read()}&lt;/style&gt;', unsafe_allow_html=True)</td><td>The trick that makes custom CSS possible. It reads the whole stylesheet and writes it into the page wrapped in a <code>&lt;style&gt;</code> tag. <code>unsafe_allow_html=True</code> is required — without it Streamlit escapes HTML and you'd see the raw tags as text. It's called "unsafe" because injecting arbitrary HTML is dangerous if the content came from a user; here it's your own file, so it's fine.</td></tr>
+        <tr><td class="ln">29</td><td class="cd">load_css()</td><td>Actually calls the function. Defining a function does nothing until you call it — a classic beginner trip-up.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</details>
+
+<details class="file">
+  <summary><span class="chip front">frontend</span> app.py &nbsp;·&nbsp; Block C — building the AI services once <span class="summary-note">lines 31&ndash;43</span></summary>
+  <div class="body">
+    <div class="code-block"><div class="code-head"><span class="code-path">app.py lines 31&ndash;43</span><span class="code-lang">python</span></div><pre><code class="language-python"># Initialize Services
+@st.cache_resource
+def get_services():
+    try:
+        client = GeminiClient()
+        analyzer = ResumeAnalyzer(client)
+        roadmap = LearningRoadmap(client)
+        return analyzer, roadmap
+    except Exception as e:
+        st.error(f"Failed to initialize AI services: {e}")
+        return None, None
+
+analyzer, roadmap = get_services()</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">32</td><td class="cd">@st.cache_resource</td><td>The decorator that makes this whole design work. Because Streamlit re-runs the script on <em>every</em> interaction, without this you'd rebuild the Gemini client on every click. <code>cache_resource</code> says: run once, keep the result alive, hand back the same objects forever after. It's the right cache for long-lived connections and clients (as opposed to <code>st.cache_data</code>, which is for copies of data).</td></tr>
+        <tr><td class="ln">34&ndash;38</td><td class="cd">try: client = GeminiClient() …</td><td>Builds one API client, then hands that <em>same</em> client to both the analyzer and the roadmap generator. That sharing matters: the 3-second call spacing is tracked inside the client, so sharing one instance means all four calls respect a single shared rhythm. Two separate clients would each keep their own timer and could fire simultaneously.</td></tr>
+        <tr><td class="ln">38</td><td class="cd">return analyzer, roadmap</td><td>Returns two things at once as a tuple. Line 43 unpacks them into two variables in one go.</td></tr>
+        <tr><td class="ln">39&ndash;41</td><td class="cd">except Exception as e: st.error(...)</td><td><strong>Alert #1.</strong> Red error box reading <em>"Failed to initialize AI services: …"</em> — most often because <code>GEMINI_API_KEY</code> is missing from <code>.env</code>, which makes <code>GeminiClient.__init__</code> raise a ValueError. Returning <code>None, None</code> keeps the app alive in a degraded state instead of crashing.</td></tr>
+        <tr><td class="ln">43</td><td class="cd">analyzer, roadmap = get_services()</td><td>Runs it (or fetches the cached result). After this line, <code>analyzer</code> is either a working object or <code>None</code> — which line 75 checks for.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box note"><span class="tag">Caching gotcha</span><p>Because of <code>@st.cache_resource</code>, if you edit your <code>.env</code> key while the app is running, the old broken client stays cached. Restart the app (or press "C" → Clear cache in Streamlit's menu) after changing the key.</p></div>
+  </div>
+</details>
+
+<details class="file">
+  <summary><span class="chip front">frontend</span> app.py &nbsp;·&nbsp; Block D — the sidebar (every input) <span class="summary-note">lines 45&ndash;67</span></summary>
+  <div class="body">
+    <div class="code-block"><div class="code-head"><span class="code-path">app.py lines 45&ndash;67</span><span class="code-lang">python</span></div><pre><code class="language-python"># --- SIDEBAR ---
+with st.sidebar:
+    st.title("⚒️ InterviewForge AI")
+    st.markdown("Your Personal AI Career Coach.")
+    st.divider()
+
+    st.header("1. Upload Resume")
+    uploaded_file = st.file_uploader("Upload PDF or DOCX", type=['pdf', 'docx'])
+
+    st.header("2. Target Role")
+    target_role = st.text_input("e.g., Data Scientist, Frontend Dev")
+
+    st.header("3. Experience Level")
+    experience_level = st.selectbox(
+        "Select your level",
+        ["Student", "Fresher", "Intern", "Junior Developer", "Mid-Level", "Senior"]
+    )
+
+    st.divider()
+    analyze_btn = st.button("🚀 Generate AI Analysis", use_container_width=True)
+
+    st.markdown("---")
+    st.caption("Built with ❤️ using Streamlit &amp; Gemini")</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does &amp; how to change it</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">46</td><td class="cd">with st.sidebar:</td><td>Everything indented under this goes into the left panel instead of the main area. That's the entire mechanism — indentation decides location.</td></tr>
+        <tr><td class="ln">47</td><td class="cd">st.title("⚒️ InterviewForge AI")</td><td>The big heading at the top of the sidebar. Rendered as an <code>&lt;h1&gt;</code>, which is why style.css line 31 can colour it with a green→blue gradient. <strong>Edit this string to rename the app in the sidebar.</strong></td></tr>
+        <tr><td class="ln">48</td><td class="cd">st.markdown("Your Personal AI Career Coach.")</td><td>A line of normal text. <code>st.markdown</code> supports formatting: <code>**bold**</code>, <code>*italic*</code>, <code>[links](url)</code>, lists.</td></tr>
+        <tr><td class="ln">49</td><td class="cd">st.divider()</td><td>Draws a horizontal rule. (Line 66 does the same thing with <code>st.markdown("---")</code> — two ways to get the same line; leftover inconsistency.)</td></tr>
+        <tr><td class="ln">51</td><td class="cd">st.header("1. Upload Resume")</td><td>Section heading, rendered as <code>&lt;h2&gt;</code>. The manual numbering "1. / 2. / 3." is what makes the sidebar read as a sequence of steps.</td></tr>
+        <tr><td class="ln">52</td><td class="cd">uploaded_file = st.file_uploader("Upload PDF or DOCX", type=['pdf','docx'])</td><td>The upload widget — dissected fully in <a href="#upload">section 6</a>. Holds <code>None</code> until a file arrives.</td></tr>
+        <tr><td class="ln">55</td><td class="cd">target_role = st.text_input("e.g., Data Scientist, Frontend Dev")</td><td>A single-line text box. Note the label is being used as a hint — arguably it should be <code>st.text_input("Target role", placeholder="e.g., Data Scientist")</code>, which would put the example <em>inside</em> the box in grey. Returns <code>""</code> (empty string) when untouched, which is what line 73 tests for.</td></tr>
+        <tr><td class="ln">58&ndash;61</td><td class="cd">experience_level = st.selectbox("Select your level", [...])</td><td>The dropdown. The second argument is a plain Python list — <strong>add or remove options by editing that list</strong>. The first item is selected by default. These exact strings are dropped verbatim into every AI prompt, so they need to read like something a recruiter would say.</td></tr>
+        <tr><td class="ln">64</td><td class="cd">analyze_btn = st.button("🚀 Generate AI Analysis", use_container_width=True)</td><td>The button. Crucial behaviour: it returns <code>True</code> only on the single re-run triggered by the click, and <code>False</code> on every other run. That's why the work happens inside <code>if analyze_btn:</code> and why the results must be saved to session state to outlive that run. <code>use_container_width=True</code> stretches it to the sidebar's full width.</td></tr>
+        <tr><td class="ln">67</td><td class="cd">st.caption("Built with ❤️ using Streamlit &amp; Gemini")</td><td>Small grey footnote text. <code>st.caption</code> is just "smaller, quieter markdown".</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</details>
+
+<details class="file">
+  <summary><span class="chip front">frontend</span> app.py &nbsp;·&nbsp; Block E — the analysis pipeline &amp; all its alerts <span class="summary-note">lines 69&ndash;106</span></summary>
+  <div class="body">
+    <div class="code-block"><div class="code-head"><span class="code-path">app.py lines 69&ndash;106</span><span class="code-lang">python</span></div><pre><code class="language-python"># --- MAIN LOGIC ---
+if analyze_btn:
+    if not uploaded_file:
+        st.error("Please upload a resume first.")
+    elif not target_role:
+        st.error("Please enter a target role.")
+    elif not analyzer:
+        st.error("AI Services are not available. Check your API Key.")
+    else:
+        try:
+            with st.spinner("Extracting text from document..."):
+                resume_text = ResumeParser.extract_text(uploaded_file, uploaded_file.name)
+
+            # Use progress bar for overall progress
+            progress_bar = st.progress(0, text="Starting AI Analysis...")
+
+            with st.spinner("Analyzing Resume &amp; Finding Gaps..."):
+                analysis_data = analyzer.analyze_resume(resume_text, target_role, experience_level)
+                progress_bar.progress(25, text="Generating Readiness Score...")
+
+                score_data = analyzer.generate_readiness_score(resume_text, target_role, experience_level)
+                progress_bar.progress(50, text="Creating Interview Questions...")
+
+                missing_skills = analysis_data.get("missing_skills", [])
+                questions_data = analyzer.generate_interview_questions(resume_text, target_role, experience_level)
+                progress_bar.progress(75, text="Building Learning Roadmap...")
+
+                roadmap_data = roadmap.generate_roadmap(missing_skills, target_role, experience_level)
+                progress_bar.progress(100, text="Analysis Complete!")
+
+            # Store in session state to persist across tab switches
+            st.session_state['analysis'] = analysis_data
+            st.session_state['scores'] = score_data
+            st.session_state['questions'] = questions_data
+            st.session_state['roadmap'] = roadmap_data
+
+        except Exception as e:
+            st.error(f"An error occurred during analysis: {str(e)}")</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">70</td><td class="cd">if analyze_btn:</td><td>Only true on the run caused by the click. Everything below is the "do the work" branch.</td></tr>
+        <tr><td class="ln">71&ndash;72</td><td class="cd">if not uploaded_file: st.error("Please upload a resume first.")</td><td><strong>Alert #2.</strong> <code>not uploaded_file</code> is true when it's <code>None</code>. Red box with a ⛔ icon. <strong>Edit that string to change the message.</strong></td></tr>
+        <tr><td class="ln">73&ndash;74</td><td class="cd">elif not target_role: st.error("Please enter a target role.")</td><td><strong>Alert #3.</strong> <code>elif</code> means "else if" — only checked if the first test failed, so you never get two errors at once.</td></tr>
+        <tr><td class="ln">75&ndash;76</td><td class="cd">elif not analyzer: st.error("AI Services are not available. Check your API Key.")</td><td><strong>Alert #4.</strong> Catches the case where <code>get_services()</code> failed back on line 41 and returned <code>None</code>.</td></tr>
+        <tr><td class="ln">78&ndash;79</td><td class="cd">try: with st.spinner("Extracting text from document..."):</td><td><code>st.spinner</code> shows a rotating indicator with that message for as long as the indented block runs, then removes it. <strong>Alert-adjacent text you can edit.</strong></td></tr>
+        <tr><td class="ln">80</td><td class="cd">resume_text = ResumeParser.extract_text(uploaded_file, uploaded_file.name)</td><td>Calls the parser without creating an object first — possible because those are <code>@staticmethod</code>s. Passes the in-memory file <em>and</em> its filename, because the bytes alone don't reveal whether it's a PDF or a DOCX.</td></tr>
+        <tr><td class="ln">83</td><td class="cd">progress_bar = st.progress(0, text="Starting AI Analysis...")</td><td>Creates a progress bar at 0%. Keeping the returned object in a variable is what lets later lines update the same bar instead of stacking new ones.</td></tr>
+        <tr><td class="ln">85</td><td class="cd">with st.spinner("Analyzing Resume &amp; Finding Gaps..."):</td><td>One spinner wraps <em>all four</em> AI calls, so this single message stays on screen for the whole 20&ndash;50 seconds while the progress bar underneath does the finer-grained reporting.</td></tr>
+        <tr><td class="ln">86</td><td class="cd">analysis_data = analyzer.analyze_resume(...)</td><td><strong>AI call 1 of 4.</strong> Returns a dictionary with summary / strengths / weaknesses / missing_skills / recruiter_feedback / reasoning.</td></tr>
+        <tr><td class="ln">87</td><td class="cd">progress_bar.progress(25, text="Generating Readiness Score...")</td><td>Moves the bar to 25%. As noted in <a href="#bigpicture">section 4</a>, the label describes what's <em>next</em>, not what just finished.</td></tr>
+        <tr><td class="ln">89</td><td class="cd">score_data = analyzer.generate_readiness_score(...)</td><td><strong>AI call 2 of 4.</strong> Returns scores + suggestions + reasoning.</td></tr>
+        <tr><td class="ln">92</td><td class="cd">missing_skills = analysis_data.get("missing_skills", [])</td><td>The one place where two AI calls are chained. <code>.get(key, default)</code> is the safe way to read a dictionary: if the key is missing it returns <code>[]</code> instead of crashing. This pattern appears roughly 30 times in this file and is the reason an unparseable AI reply produces a blank dashboard rather than an exception.</td></tr>
+        <tr><td class="ln">93</td><td class="cd">questions_data = analyzer.generate_interview_questions(...)</td><td><strong>AI call 3 of 4.</strong> 40 questions across 4 categories.</td></tr>
+        <tr><td class="ln">96</td><td class="cd">roadmap_data = roadmap.generate_roadmap(missing_skills, target_role, experience_level)</td><td><strong>AI call 4 of 4.</strong> Note it receives the <em>skills gap from call 1</em>, not the resume — so the roadmap targets exactly what was found missing.</td></tr>
+        <tr><td class="ln">97</td><td class="cd">progress_bar.progress(100, text="Analysis Complete!")</td><td>Fills the bar. The bar and spinner both disappear when the <code>with</code> block ends and the script moves on.</td></tr>
+        <tr><td class="ln">100&ndash;103</td><td class="cd">st.session_state['analysis'] = analysis_data …</td><td><strong>The four most important lines in the file.</strong> <code>st.session_state</code> is a dictionary that survives re-runs. Without these, switching tabs would wipe everything and you'd have to pay for four more AI calls. Note the keys chosen here — <code>'analysis'</code>, <code>'scores'</code>, <code>'questions'</code>, <code>'roadmap'</code> — are referenced by name all through the dashboard below.</td></tr>
+        <tr><td class="ln">105&ndash;106</td><td class="cd">except Exception as e: st.error(f"An error occurred during analysis: {str(e)}")</td><td><strong>Alert #5.</strong> The catch-all. Any failure anywhere — corrupt PDF, all four Gemini models down, network dropped — lands here and is shown in a red box with the raw technical message appended.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box try">
+      <span class="tag">All five alerts, in one place</span>
+      <p>Lines <strong>40, 72, 74, 76, 106</strong> are every error message in the app, plus <code>st.info</code> on line 265 and <code>st.info</code> on line 194. Streamlit gives you four alert flavours and swapping the function name is all it takes to change the colour and icon: <code>st.error</code> (red), <code>st.warning</code> (yellow), <code>st.info</code> (blue), <code>st.success</code> (green).</p>
+    </div>
+  </div>
+</details>
+
+<details class="file">
+  <summary><span class="chip front">frontend</span> app.py &nbsp;·&nbsp; Block F — dashboard shell &amp; tabs <span class="summary-note">lines 108&ndash;118</span></summary>
+  <div class="body">
+    <div class="code-block"><div class="code-head"><span class="code-path">app.py lines 108&ndash;118</span><span class="code-lang">python</span></div><pre><code class="language-python"># --- DASHBOARD RENDER ---
+if 'analysis' in st.session_state:
+    st.title(f"Targeting: {target_role} ({experience_level})")
+
+    tab1, tab2, tab3, tab4 = st.tabs([
+        "📊 Dashboard &amp; Analysis",
+        "🎤 Interview Prep",
+        "🗺️ Learning Roadmap",
+        "💡 Recommendations"
+    ])</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">109</td><td class="cd">if 'analysis' in st.session_state:</td><td>The switch between the two states of the app. If an analysis has ever completed this session, draw the dashboard; otherwise (line 263) draw the welcome screen. Testing for the key's presence — not the button — is what keeps the dashboard on screen across every later re-run.</td></tr>
+        <tr><td class="ln">110</td><td class="cd">st.title(f"Targeting: {target_role} ({experience_level})")</td><td>The page heading, built with an f-string so it reads e.g. "Targeting: Data Scientist (Fresher)". Subtle catch: it uses the <em>current</em> sidebar values, so if you change the role dropdown without re-running the analysis, the heading updates while the data below it doesn't.</td></tr>
+        <tr><td class="ln">112&ndash;117</td><td class="cd">tab1, tab2, tab3, tab4 = st.tabs([...])</td><td>Creates four tabs and unpacks the four returned objects into four variables. <strong>Edit these four strings to rename the tabs</strong> — the emoji are part of the label text, nothing special. Important: Streamlit renders <em>all four tabs' contents</em> on every run and just hides the inactive ones; switching tabs is not a fresh fetch.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</details>
+
+<details class="file">
+  <summary><span class="chip front">frontend</span> app.py &nbsp;·&nbsp; Block G — Tab 1, scores &amp; radar chart <span class="summary-note">lines 119&ndash;196</span></summary>
+  <div class="body">
+    <div class="code-block"><div class="code-head"><span class="code-path">app.py lines 120&ndash;142</span><span class="code-lang">python</span></div><pre><code class="language-python">    with tab1:
+        scores = st.session_state['scores'].get('scores', {})
+        st.header("Candidate Readiness Score")
+
+        col1, col2 = st.columns([1, 2])
+        with col1:
+            overall = scores.get('overall', 0)
+            st.metric("Overall Readiness", f"{overall}/100")
+
+            st.markdown(f"**Technical Skills**: {scores.get('technical_skills', 0)}")
+            st.progress(scores.get('technical_skills', 0) / 100)
+
+            st.markdown(f"**Project Quality**: {scores.get('project_quality', 0)}")
+            st.progress(scores.get('project_quality', 0) / 100)
+
+            st.markdown(f"**Resume Quality**: {scores.get('resume_quality', 0)}")
+            st.progress(scores.get('resume_quality', 0) / 100)
+
+            st.markdown(f"**Industry Readiness**: {scores.get('industry_readiness', 0)}")
+            st.progress(scores.get('industry_readiness', 0) / 100)</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">120</td><td class="cd">with tab1:</td><td>Same indentation trick as the sidebar — everything indented here lands in the first tab.</td></tr>
+        <tr><td class="ln">121</td><td class="cd">scores = st.session_state['scores'].get('scores', {})</td><td>Reaches into the stored dictionary and pulls out the nested <code>scores</code> object. Note the nesting: the AI returns <code>{"scores": {...}, "suggestions": {...}, "reasoning": "..."}</code>, so <code>scores</code> here is the inner five numbers. Defaults to an empty dict, which makes every lookup below fall back to 0.</td></tr>
+        <tr><td class="ln">124</td><td class="cd">col1, col2 = st.columns([1, 2])</td><td>Splits the width into two columns with a <strong>1:2 ratio</strong> — the numbers list is one-third wide, the chart two-thirds. Change to <code>[1, 1]</code> for equal halves, or <code>[2, 1]</code> to flip the emphasis.</td></tr>
+        <tr><td class="ln">127&ndash;128</td><td class="cd">overall = scores.get('overall', 0) / st.metric("Overall Readiness", f"{overall}/100")</td><td><code>st.metric</code> is Streamlit's big-number component. Styled green and 2rem by style.css lines 67&ndash;71. The "/100" is cosmetic text you're gluing on.</td></tr>
+        <tr><td class="ln">131&ndash;141</td><td class="cd">st.markdown(f"**Technical Skills**: …") + st.progress(… / 100)</td><td>The same two-line pattern repeated four times: a bold label with the raw number, then a bar. <strong>The <code>/ 100</code> is essential</strong> — <code>st.progress</code> wants a value from 0.0 to 1.0, so 80 becomes 0.8. Passing 80 directly would throw an error. The bars get their pink-to-indigo gradient from style.css lines 74&ndash;76.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="code-block"><div class="code-head"><span class="code-path">app.py lines 143&ndash;174</span><span class="code-lang">python</span></div><pre><code class="language-python">        with col2:
+            categories = ['Technical Skills', 'Project Quality', 'Resume Quality', 'Industry Readiness']
+            values = [
+                scores.get('technical_skills', 0),
+                scores.get('project_quality', 0),
+                scores.get('resume_quality', 0),
+                scores.get('industry_readiness', 0)
+            ]
+            # Close the loop
+            categories = categories + [categories[0]]
+            values = values + [values[0]]
+
+            fig = go.Figure(data=go.Scatterpolar(
+                r=values,
+                theta=categories,
+                fill='toself',
+                line_color='#6366f1',
+                fillcolor='rgba(99, 102, 241, 0.4)'
+            ))
+            fig.update_layout(
+                polar=dict(radialaxis=dict(visible=True, range=[0, 100])),
+                showlegend=False,
+                margin=dict(l=40, r=40, t=20, b=20),
+                paper_bgcolor='rgba(0,0,0,0)',
+                plot_bgcolor='rgba(0,0,0,0)',
+                font=dict(color='#e2e8f0')
+            )
+            st.plotly_chart(fig, use_container_width=True)
+
+        with st.expander("🤔 Why this score?"):
+            st.write(st.session_state['scores'].get('reasoning', 'No reasoning provided.'))</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">145&ndash;151</td><td class="cd">categories = [...] / values = [...]</td><td>Two parallel lists: the four axis names and the four numbers, in matching order. If you reorder one you must reorder the other.</td></tr>
+        <tr><td class="ln">153&ndash;154</td><td class="cd">categories = categories + [categories[0]]</td><td>The neat bit. A radar chart draws lines from point to point, so with four points you get an open shape — the line never returns from "Industry Readiness" back to "Technical Skills". Appending a copy of the first item to the end of both lists closes the polygon. <code>categories[0]</code> is the first item; <code>+ [x]</code> makes a new list with x on the end.</td></tr>
+        <tr><td class="ln">156&ndash;162</td><td class="cd">fig = go.Figure(data=go.Scatterpolar(...))</td><td>Builds the chart object. <code>r=</code> is the distance from centre (your scores), <code>theta=</code> is the angle labels. <code>fill='toself'</code> shades the enclosed area. <code>line_color='#6366f1'</code> is the indigo outline and <code>fillcolor='rgba(99,102,241,0.4)'</code> is the same indigo at 40% opacity — <strong>change these two hex/rgba values to recolour the chart.</strong></td></tr>
+        <tr><td class="ln">163&ndash;170</td><td class="cd">fig.update_layout(...)</td><td><code>range=[0,100]</code> pins the axis so a score of 50 always looks like half — without it Plotly would auto-scale and make weak scores look strong. <code>showlegend=False</code> hides the legend (pointless with one series). <code>margin=dict(...)</code> is padding in pixels so the labels aren't clipped. The two <code>rgba(0,0,0,0)</code> backgrounds mean fully transparent, letting the page background show through. <code>font=dict(color='#e2e8f0')</code> makes the labels near-white — which is a hard-coded assumption that the app is running in dark mode.</td></tr>
+        <tr><td class="ln">171</td><td class="cd">st.plotly_chart(fig, use_container_width=True)</td><td>Hands the finished figure to Streamlit, stretched to the column width. The chart is genuinely interactive — hover, zoom, download as PNG.</td></tr>
+        <tr><td class="ln">173&ndash;174</td><td class="cd">with st.expander("🤔 Why this score?"):</td><td>A collapsible section, closed by default. Add <code>expanded=True</code> to have it open (as line 203 does). Inside, <code>st.write</code> prints the AI's own explanation — this is the "explainable AI" feature the README advertises, and it exists because the <code>reasoning</code> key was requested in every prompt.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="code-block"><div class="code-head"><span class="code-path">app.py lines 176&ndash;196</span><span class="code-lang">python</span></div><pre><code class="language-python">        st.divider()
+        st.header("Resume Analysis")
+        st.write(st.session_state['analysis'].get('summary', ''))
+
+        c1, c2 = st.columns(2)
+        with c1:
+            st.subheader("💪 Key Strengths")
+            for item in st.session_state['analysis'].get('strengths', []):
+                st.markdown(f"- ✅ {item}")
+        with c2:
+            st.subheader("⚠️ Areas for Improvement")
+            for item in st.session_state['analysis'].get('weaknesses', []):
+                st.markdown(f"- ❌ {item}")
+
+        st.subheader("🎯 Missing Skills for Role")
+        tags = "".join([f"&lt;span style='background:#334155; padding:4px 8px; border-radius:4px; margin-right:8px;'&gt;{s}&lt;/span&gt;" for s in st.session_state['analysis'].get('missing_skills', [])])
+        st.markdown(tags, unsafe_allow_html=True)
+
+        st.info(f"**Recruiter Feedback**: {st.session_state['analysis'].get('recruiter_feedback', '')}")
+        with st.expander("🤔 Why this analysis?"):
+            st.write(st.session_state['analysis'].get('reasoning', ''))</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">180</td><td class="cd">c1, c2 = st.columns(2)</td><td>Passing a plain number instead of a ratio list gives you that many equal columns.</td></tr>
+        <tr><td class="ln">183&ndash;184</td><td class="cd">for item in [...]: st.markdown(f"- ✅ {item}")</td><td>A loop: for each strength in the list, print one bullet. The <code>- </code> makes it a markdown bullet and the ✅ is decoration. If the list is empty, the loop simply doesn't run and the section appears blank — no error. <strong>Swap ✅/❌ here to change those icons.</strong></td></tr>
+        <tr><td class="ln">191</td><td class="cd">tags = "".join([f"&lt;span style='…'&gt;{s}&lt;/span&gt;" for s in …])</td><td>The most dense line in the file. It's a <em>list comprehension</em>: build one HTML <code>&lt;span&gt;</code> per missing skill, each with inline styling (slate background #334155, 4px/8px padding, rounded corners, 8px right margin), then <code>"".join(...)</code> glues them into one long string with nothing between them. The result is pill-shaped skill tags.</td></tr>
+        <tr><td class="ln">192</td><td class="cd">st.markdown(tags, unsafe_allow_html=True)</td><td>Renders that raw HTML. Note the styling here is <em>inline</em>, not in style.css — so to restyle the skill pills you edit line 191, not the stylesheet. That inconsistency is worth knowing before you go hunting in the CSS file.</td></tr>
+        <tr><td class="ln">194</td><td class="cd">st.info(f"**Recruiter Feedback**: …")</td><td><strong>Alert #6.</strong> A blue info box, styled by style.css lines 112&ndash;116 with an indigo left border. Used here decoratively rather than as a real alert — it's a way to make one paragraph stand out.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</details>
+
+<details class="file">
+  <summary><span class="chip front">frontend</span> app.py &nbsp;·&nbsp; Blocks H, I, J — tabs 2, 3, 4 <span class="summary-note">lines 198&ndash;262</span></summary>
+  <div class="body">
+    <div class="code-block"><div class="code-head"><span class="code-path">app.py lines 198&ndash;222 — Interview Prep</span><span class="code-lang">python</span></div><pre><code class="language-python">    with tab2:
+        st.header("Tailored Interview Questions")
+        q_data = st.session_state['questions']
+
+        with st.expander("🤔 Why these questions?", expanded=True):
+            st.write(q_data.get('reasoning', ''))
+
+        q_col1, q_col2 = st.columns(2)
+        with q_col1:
+            st.subheader("🤝 HR &amp; Culture Fit")
+            for i, q in enumerate(q_data.get('hr_questions', []), 1):
+                st.markdown(f"**{i}.** {q}")
+
+            st.subheader("🧠 Behavioral")
+            for i, q in enumerate(q_data.get('behavioral_questions', []), 1):
+                st.markdown(f"**{i}.** {q}")
+        with q_col2:
+            st.subheader("💻 Technical")
+            for i, q in enumerate(q_data.get('technical_questions', []), 1):
+                st.markdown(f"**{i}.** {q}")
+
+            st.subheader("📂 Project-Based")
+            for i, q in enumerate(q_data.get('project_based_questions', []), 1):
+                st.markdown(f"**{i}.** {q}")</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">201</td><td class="cd">q_data = st.session_state['questions']</td><td>Read once into a short name, then reused four times — the same trick would have tidied Tab 1 considerably.</td></tr>
+        <tr><td class="ln">203</td><td class="cd">with st.expander("🤔 Why these questions?", expanded=True):</td><td>The one expander that starts <strong>open</strong>. That's the only difference from the others.</td></tr>
+        <tr><td class="ln">209</td><td class="cd">for i, q in enumerate(q_data.get('hr_questions', []), 1):</td><td><code>enumerate</code> hands you a counter alongside each item. The trailing <code>, 1</code> makes it start at 1 instead of Python's default 0 — so questions read "1." to "10." rather than "0." to "9.".</td></tr>
+        <tr><td class="ln">210</td><td class="cd">st.markdown(f"**{i}.** {q}")</td><td>Bolds the number, leaves the question plain. Four identical loops with different dictionary keys — an obvious candidate for refactoring into a small helper function if you ever want the file shorter.</td></tr>
+        <tr><td class="ln">206&ndash;222</td><td class="cd">q_col1 / q_col2 arrangement</td><td>The layout choice: HR + Behavioral (the "soft" categories) on the left, Technical + Project-Based (the "hard" ones) on the right. Move a <code>st.subheader</code> block between the two <code>with</code> blocks to rearrange.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="code-block"><div class="code-head"><span class="code-path">app.py lines 224&ndash;239 — Learning Roadmap</span><span class="code-lang">python</span></div><pre><code class="language-python">    with tab3:
+        st.header("Your 90-Day Upskill Roadmap")
+        r_data = st.session_state['roadmap']
+
+        with st.expander("🤔 Why this roadmap?"):
+            st.write(r_data.get('reasoning', ''))
+
+        phases = [('day_30', 'Days 1-30', '🌱'), ('day_60', 'Days 31-60', '🚀'), ('day_90', 'Days 61-90', '⭐')]
+
+        for key, title, icon in phases:
+            phase_data = r_data.get(key, {})
+            st.subheader(f"{icon} {title}: {phase_data.get('focus', 'Focus')}")
+            for task in phase_data.get('tasks', []):
+                st.markdown(f"- {task}")
+            st.markdown("---")</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">232</td><td class="cd">phases = [('day_30', 'Days 1-30', '🌱'), …]</td><td>The cleanest pattern in the file. A list of three <em>tuples</em>, each bundling: the dictionary key the AI used, the human title, and an emoji. A tuple is just a fixed group of values in parentheses.</td></tr>
+        <tr><td class="ln">234</td><td class="cd">for key, title, icon in phases:</td><td>Unpacks all three values per loop turn, so one loop body renders all three phases instead of three copy-pasted blocks. <strong>To add a "Days 91-120" phase you'd add one tuple here and one more key to the prompt in roadmap.py</strong> — both, or the new phase renders empty.</td></tr>
+        <tr><td class="ln">236</td><td class="cd">st.subheader(f"{icon} {title}: {phase_data.get('focus','Focus')}")</td><td>Builds e.g. "🌱 Days 1-30: Master SQL fundamentals". The fallback text is literally the word "Focus", which is what you'd see if the AI omitted that key.</td></tr>
+        <tr><td class="ln">239</td><td class="cd">st.markdown("---")</td><td>A divider after each phase, including the last one — leaving a trailing rule at the bottom of the tab. Cosmetic nitpick, easily fixed with a counter if it bothers you.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="code-block"><div class="code-head"><span class="code-path">app.py lines 241&ndash;262 — Recommendations</span><span class="code-lang">python</span></div><pre><code class="language-python">    with tab4:
+        st.header("Actionable Recommendations")
+        s_data = st.session_state['scores'].get('suggestions', {})
+
+        r_col1, r_col2 = st.columns(2)
+        with r_col1:
+            st.subheader("📝 Resume Improvements")
+            for item in s_data.get('resume_improvements', []):
+                st.markdown(f"- {item}")
+
+            st.subheader("🏆 Suggested Certifications")
+            for item in s_data.get('certifications', []):
+                st.markdown(f"- {item}")
+        with r_col2:
+            st.subheader("💻 Project Ideas to Build")
+            for item in s_data.get('project_suggestions', []):
+                st.markdown(f"- {item}")
+
+            st.subheader("🌐 Portfolio Enhancements")
+            for item in s_data.get('portfolio', []):
+                st.markdown(f"- {item}")</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">244</td><td class="cd">s_data = st.session_state['scores'].get('suggestions', {})</td><td>Worth noticing: this tab is fed by the <strong>scoring</strong> call, not a fifth AI call. The suggestions were requested inside the same prompt that produced the numbers, which is why there are only four network calls for what looks like five sections of content.</td></tr>
+        <tr><td class="ln">248&ndash;262</td><td class="cd">four subheaders + four loops</td><td>Identical structure to Tab 2. The four keys — <code>resume_improvements</code>, <code>certifications</code>, <code>project_suggestions</code>, <code>portfolio</code> — must match exactly what <code>analyzer.py</code> asked for on lines 71&ndash;76. If you rename a key in one place and not the other, that section silently renders empty.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</details>
+
+<details class="file">
+  <summary><span class="chip front">frontend</span> app.py &nbsp;·&nbsp; Block K — the welcome screen <span class="summary-note">lines 263&ndash;275</span></summary>
+  <div class="body">
+    <div class="code-block"><div class="code-head"><span class="code-path">app.py lines 263&ndash;275</span><span class="code-lang">python</span></div><pre><code class="language-python">else:
+    # Landing state
+    st.info("👈 Please upload your resume and select your target role in the sidebar to begin.")
+
+    st.markdown("""
+    ### Welcome to InterviewForge AI
+    This tool helps you prepare for interviews by providing:
+    - **Resume Analysis**: Identify strengths, weaknesses, and skill gaps.
+    - **Readiness Score**: Get a quantifiable measure of your preparation.
+    - **Interview Questions**: Practice with tailored HR, Technical, and Behavioral questions.
+    - **Learning Roadmap**: Follow a customized 90-day plan to bridge your skill gaps.
+    """)</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">263</td><td class="cd">else:</td><td>Pairs with <code>if 'analysis' in st.session_state:</code> back on line 109. This is what a first-time visitor sees.</td></tr>
+        <tr><td class="ln">265</td><td class="cd">st.info("👈 Please upload your resume…")</td><td><strong>Alert #7.</strong> Blue box. The 👈 points at the sidebar.</td></tr>
+        <tr><td class="ln">267&ndash;274</td><td class="cd">st.markdown("""…""")</td><td>Triple quotes let a string span multiple lines. Inside it, markdown syntax works: <code>###</code> is a heading, <code>-</code> starts a bullet, <code>**text**</code> is bold. <strong>This is the entire welcome copy — edit freely.</strong> One catch: the leading indentation is preserved in the string, and markdown treats 4+ spaces as a code block, so if you add deeper indentation your text may suddenly render as monospace code.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</details>
+
+<!-- ---------- gemini_service.py ---------- -->
+<h3 id="f-gemini">services/gemini_service.py &mdash; the only file that touches the internet</h3>
+<p><strong>113 lines.</strong> Every byte that leaves your computer leaves through here. It exists so that the rest of the codebase can say "ask the AI this" without knowing anything about HTTP, API keys, retries or model names.</p>
+
+<details class="file" open>
+  <summary><span class="chip svc">service</span> gemini_service.py &nbsp;·&nbsp; setup &amp; configuration <span class="summary-note">lines 1&ndash;36</span></summary>
+  <div class="body">
+    <div class="code-block"><div class="code-head"><span class="code-path">services/gemini_service.py lines 1&ndash;36</span><span class="code-lang">python</span></div><pre><code class="language-python">import os
+import time
+from google import genai
+from google.genai import types
+
+class GeminiClient:
+    """Wrapper for interacting with the Google Gemini API using the new google-genai SDK.
+
+    Uses a model fallback chain to handle 503 'high demand' errors by automatically
+    switching to the next available model instead of waiting on an overloaded one.
+    """
+
+    MODEL_CHAIN = [
+        "gemini-3.7-flash",
+        "gemini-3.6-flash",
+        "gemini-3.5-flash",
+        "gemini-3.5-flash-lite",
+    ]
+
+    CALL_SPACING = 3
+
+    def __init__(self):
+        api_key = os.getenv("GEMINI_API_KEY")
+        if not api_key:
+            raise ValueError("GEMINI_API_KEY environment variable not set. Please check your .env file.")
+
+        self.client = genai.Client(api_key=api_key)
+        self._last_call_time = 0
+
+    def _wait_for_spacing(self):
+        elapsed = time.time() - self._last_call_time
+        if elapsed &lt; self.CALL_SPACING:
+            time.sleep(self.CALL_SPACING - elapsed)</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">1&ndash;4</td><td class="cd">import os, time / from google import genai</td><td><code>os</code> reads the API key from the environment; <code>time</code> powers the sleeping and spacing. <code>google.genai</code> is the modern SDK — worth knowing that an older library called <code>google-generativeai</code> exists with a different API, and tutorials mixing the two are a common source of confusion. Your git history shows this project migrated to the newer one.</td></tr>
+        <tr><td class="ln">6</td><td class="cd">class GeminiClient:</td><td>The blueprint. Everything below belongs to it.</td></tr>
+        <tr><td class="ln">7&ndash;11</td><td class="cd">"""Wrapper for interacting…"""</td><td>A <strong>docstring</strong> — documentation as the first thing inside a class or function. Unlike a <code>#</code> comment, it's readable at runtime via <code>help(GeminiClient)</code>.</td></tr>
+        <tr><td class="ln">14&ndash;19</td><td class="cd">MODEL_CHAIN = [...]</td><td>A <em>class attribute</em> — shared by every instance, written in capitals by convention to signal "constant, don't change at runtime". Ordered newest → oldest. <strong>This list is your model policy: edit it to change which models are tried and in what order.</strong></td></tr>
+        <tr><td class="ln">22</td><td class="cd">CALL_SPACING = 3</td><td>Minimum seconds between any two API calls. Raise it if you hit rate limits; lower it (to 0) if you're on a paid tier and want speed.</td></tr>
+        <tr><td class="ln">25</td><td class="cd">api_key = os.getenv("GEMINI_API_KEY")</td><td>Reads the key that <code>load_dotenv()</code> loaded back in app.py line 13. Returns <code>None</code> if it isn't there.</td></tr>
+        <tr><td class="ln">26&ndash;27</td><td class="cd">if not api_key: raise ValueError(...)</td><td><strong>Fail fast.</strong> Rather than letting a mysterious authentication error surface 30 seconds later, it stops immediately with a message naming the exact fix ("check your .env file"). This exception is what app.py line 40 catches and displays.</td></tr>
+        <tr><td class="ln">29</td><td class="cd">self.client = genai.Client(api_key=api_key)</td><td>Builds Google's client object once and stores it on <code>self</code> so every later call reuses the same authenticated connection.</td></tr>
+        <tr><td class="ln">30</td><td class="cd">self._last_call_time = 0</td><td>The timestamp bookkeeping for spacing. The leading underscore is a Python convention meaning "internal — don't touch this from outside the class". It's a polite signal, not an enforced rule.</td></tr>
+        <tr><td class="ln">32&ndash;36</td><td class="cd">def _wait_for_spacing(self):</td><td>Compares now against the last call. If fewer than 3 seconds have passed, sleep exactly the remainder. Elegant detail: if the previous request already took 8 seconds, <code>elapsed</code> is 8, the condition is false, and it doesn't sleep at all — the wait is only ever the shortfall.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</details>
+
+<details class="file">
+  <summary><span class="chip svc">service</span> gemini_service.py &nbsp;·&nbsp; the retry engine <span class="summary-note">lines 38&ndash;75</span></summary>
+  <div class="body">
+    <div class="code-block"><div class="code-head"><span class="code-path">services/gemini_service.py lines 38&ndash;75</span><span class="code-lang">python</span></div><pre><code class="language-python">    def _call_with_fallback(self, make_request, max_retries_per_model=2):
+        last_error = None
+
+        for model_name in self.MODEL_CHAIN:
+            for attempt in range(max_retries_per_model):
+                try:
+                    self._wait_for_spacing()
+                    self._last_call_time = time.time()
+                    return make_request(model_name)
+                except Exception as e:
+                    last_error = e
+                    error_str = str(e).lower()
+                    is_transient = any(
+                        keyword in error_str
+                        for keyword in ["503", "429", "500", "unavailable", "quota", "high demand", "overloaded", "capacity"]
+                    )
+
+                    if is_transient:
+                        if attempt &lt; max_retries_per_model - 1:
+                            wait_time = 5 * (2 ** attempt)
+                            print(f"[GeminiClient] {model_name} attempt {attempt+1} failed (transient), retrying in {wait_time}s...")
+                            time.sleep(wait_time)
+                            continue
+                        else:
+                            print(f"[GeminiClient] {model_name} exhausted retries, falling back to next model...")
+                            break
+                    else:
+                        raise
+
+        raise Exception(f"All models in fallback chain failed. Last error: {str(last_error)}")</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">38</td><td class="cd">def _call_with_fallback(self, make_request, max_retries_per_model=2):</td><td>The clever design move: <code>make_request</code> is <strong>a function passed as an argument</strong>. This method doesn't know or care what the request does — it only knows how to keep trying one. That's why the same retry logic serves both <code>generate_content</code> and <code>generate_json</code> without duplication. <code>=2</code> is a default value, so callers can omit it.</td></tr>
+        <tr><td class="ln">41</td><td class="cd">for model_name in self.MODEL_CHAIN:</td><td>Outer loop: walk down the model list.</td></tr>
+        <tr><td class="ln">42</td><td class="cd">for attempt in range(max_retries_per_model):</td><td>Inner loop: two attempts per model. <code>range(2)</code> yields 0 then 1.</td></tr>
+        <tr><td class="ln">49&ndash;51</td><td class="cd">self._wait_for_spacing() / self._last_call_time = time.time() / return make_request(model_name)</td><td>Wait for the rhythm, stamp the clock, fire. If it works, <code>return</code> exits both loops and the whole method instantly. Note the timestamp is set <em>before</em> the call, so spacing is measured from when a request started, not when it finished.</td></tr>
+        <tr><td class="ln">54&ndash;58</td><td class="cd">error_str = str(e).lower() / is_transient = any(...)</td><td>The error classifier explained in <a href="#complexity">section 8</a>. It's <em>string matching on the error message</em>, which is pragmatic but fragile — if Google reworded their errors, the keywords could stop matching and transient failures would be treated as permanent. Inspecting a structured status code would be sturdier.</td></tr>
+        <tr><td class="ln">61&ndash;65</td><td class="cd">if attempt &lt; max_retries_per_model - 1: … continue</td><td>"Do I have another attempt left with this model?" If yes, sleep with exponential backoff and <code>continue</code> — jump to the next turn of the inner loop.</td></tr>
+        <tr><td class="ln">66&ndash;69</td><td class="cd">else: … break</td><td>Out of attempts for this model. <code>break</code> exits the inner loop only, so the outer loop advances to the next model. The <code>print</code> goes to the terminal you launched from — <strong>if you ever wonder which model actually answered, that terminal is where the evidence is.</strong></td></tr>
+        <tr><td class="ln">70&ndash;72</td><td class="cd">else: raise</td><td>A bare <code>raise</code> re-throws the original error untouched, preserving the full traceback. Correct behaviour for permanent problems — retrying a bad API key four times just wastes 45 seconds before showing the same message.</td></tr>
+        <tr><td class="ln">75</td><td class="cd">raise Exception(f"All models in fallback chain failed. Last error: …")</td><td>Only reached if every model exhausted every attempt. Includes the last real error so you can see <em>why</em>.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</details>
+
+<details class="file">
+  <summary><span class="chip svc">service</span> gemini_service.py &nbsp;·&nbsp; the two public methods <span class="summary-note">lines 77&ndash;113</span></summary>
+  <div class="body">
+    <div class="code-block"><div class="code-head"><span class="code-path">services/gemini_service.py lines 77&ndash;113</span><span class="code-lang">python</span></div><pre><code class="language-python">    def generate_content(self, prompt: str) -&gt; str:
+        def make_request(model_name):
+            response = self.client.models.generate_content(
+                model=model_name,
+                contents=prompt,
+            )
+            if not response.text:
+                raise Exception("Response was empty or blocked by safety filters.")
+            return response.text
+
+        try:
+            return self._call_with_fallback(make_request)
+        except Exception as e:
+            raise Exception(f"Gemini API Error: {str(e)}")
+
+    def generate_json(self, prompt: str) -&gt; str:
+        json_prompt = prompt + "\n\nCRITICAL INSTRUCTION: Your entire response MUST be a valid JSON object. Do not include markdown formatting like ```json or any conversational text outside the JSON block."
+
+        def make_request(model_name):
+            response = self.client.models.generate_content(
+                model=model_name,
+                contents=json_prompt,
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json"
+                )
+            )
+            if not response.text:
+                raise Exception("Response was empty or blocked by safety filters.")
+            return response.text
+
+        try:
+            return self._call_with_fallback(make_request)
+        except Exception as e:
+            raise Exception(f"Gemini API JSON Error: {str(e)}")</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">77</td><td class="cd">def generate_content(self, prompt: str) -&gt; str:</td><td><code>prompt: str</code> and <code>-&gt; str</code> are <strong>type hints</strong>: "expects text, returns text". Python does not enforce them — they're documentation for humans and editors. <em>This method is currently never called by anything.</em> It's the plain-text sibling kept for future use.</td></tr>
+        <tr><td class="ln">79&ndash;86</td><td class="cd">def make_request(model_name): …</td><td>A function defined <em>inside</em> another function — a closure. It can see <code>prompt</code> from the enclosing scope, which is why it only needs <code>model_name</code> as a parameter. This little package is what gets handed to the retry engine.</td></tr>
+        <tr><td class="ln">84&ndash;85</td><td class="cd">if not response.text: raise Exception("Response was empty or blocked by safety filters.")</td><td>Important safety net. Gemini can return a technically-successful response with no text — usually because a safety filter blocked it. Converting that into an exception means the retry engine treats it as a failure and tries the next model, rather than passing an empty string down the line to become a blank dashboard.</td></tr>
+        <tr><td class="ln">88&ndash;91</td><td class="cd">try: return self._call_with_fallback(make_request) / except: raise Exception(f"Gemini API Error: …")</td><td>Wraps whatever went wrong in a friendlier prefix before it bubbles up to app.py's catch-all on line 106. This is why user-facing errors read "An error occurred during analysis: Gemini API JSON Error: All models in fallback chain failed…" — three layers of wrapping, each adding context.</td></tr>
+        <tr><td class="ln">95</td><td class="cd">json_prompt = prompt + "\n\nCRITICAL INSTRUCTION: …"</td><td>Appends the JSON demand to every prompt in one central place. <code>\n\n</code> is two newlines — a blank line, which visually separates the instruction from the task above it. Models pay more attention to instructions at the very end of a prompt, so the position is deliberate.</td></tr>
+        <tr><td class="ln">101&ndash;103</td><td class="cd">config=types.GenerateContentConfig(response_mime_type="application/json")</td><td>The genuine structural guarantee — Google's JSON mode, described in <a href="#json">section 7</a>. Everything else about JSON in this project is persuasion; this is enforcement.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box why">
+      <span class="tag">Why the duplication between the two methods?</span>
+      <p>The two methods are 90% identical. A tidier version would have one method with a <code>json_mode=True</code> flag. The duplication is a deliberate readability trade-off — each method reads straight through with no branching — but if you ever add a feature (say, temperature control or token limits), remember you must add it in both places.</p>
+    </div>
+  </div>
+</details>
+
+<!-- ---------- analyzer.py ---------- -->
+<h3 id="f-analyzer">services/analyzer.py &mdash; three prompts, three answers</h3>
+<p><strong>85 lines, and roughly 60 of them are English rather than code.</strong> That ratio is the honest signature of an LLM app: the "logic" is mostly a well-written request.</p>
+
+<details class="file">
+  <summary><span class="chip svc">service</span> analyzer.py &nbsp;·&nbsp; full walkthrough <span class="summary-note">lines 1&ndash;85</span></summary>
+  <div class="body">
+    <div class="code-block"><div class="code-head"><span class="code-path">services/analyzer.py lines 1&ndash;31 (the pattern, shown once)</span><span class="code-lang">python</span></div><pre><code class="language-python">import json
+from services.gemini_service import GeminiClient
+from utils.helpers import extract_json_from_text
+
+class ResumeAnalyzer:
+    """Handles all AI analysis tasks related to the candidate's resume and role."""
+
+    def __init__(self, client: GeminiClient):
+        self.client = client
+
+    def analyze_resume(self, resume_text: str, role: str, experience: str) -&gt; dict:
+        """Generates a comprehensive resume analysis."""
+        prompt = f"""
+        You are an expert technical recruiter and AI career coach.
+        Analyze the following resume for the target role of "{role}" at the "{experience}" level.
+
+        Provide your response in JSON format exactly matching this structure:
+        {{
+            "summary": "A 3-4 sentence professional summary of the candidate's fit.",
+            "strengths": ["Strength 1", "Strength 2", "Strength 3"],
+            "weaknesses": ["Weakness 1", "Weakness 2"],
+            "missing_skills": ["Skill 1", "Skill 2", "Skill 3"],
+            "recruiter_feedback": "A direct, constructive paragraph of feedback from a recruiter's perspective.",
+            "reasoning": "Explain why these specific strengths, weaknesses, and gaps were identified."
+        }}
+
+        Resume text:
+        {resume_text}
+        """
+        response_text = self.client.generate_json(prompt)
+        return extract_json_from_text(response_text)</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">1</td><td class="cd">import json</td><td><strong>Unused</strong>, same as in app.py. Safe to delete.</td></tr>
+        <tr><td class="ln">8&ndash;9</td><td class="cd">def __init__(self, client: GeminiClient): self.client = client</td><td><strong>Dependency injection</strong>, and it's the best structural decision in the project. The analyzer doesn't create its own Gemini client — one is handed to it. That means: all four calls share one rate-limit timer, and if you ever wanted to swap Gemini for OpenAI you'd write one new client class and change nothing here.</td></tr>
+        <tr><td class="ln">13</td><td class="cd">prompt = f"""</td><td>A multi-line f-string. The leading spaces on each line are part of the string — the model doesn't mind, but it does mean the prompt Gemini receives is indented.</td></tr>
+        <tr><td class="ln">14</td><td class="cd">You are an expert technical recruiter and AI career coach.</td><td><strong>Role assignment</strong> — the oldest reliable prompting technique. Telling a model who to be measurably shifts vocabulary, standards and tone. Each of the four prompts assigns a different persona: recruiter here, "hiring manager" for questions, "highly analytical AI scoring system" for scores, "elite career coach" for the roadmap.</td></tr>
+        <tr><td class="ln">15</td><td class="cd">…for the target role of "{role}" at the "{experience}" level.</td><td>Where the sidebar inputs enter the AI's world. Everything the user typed lands right here.</td></tr>
+        <tr><td class="ln">17&ndash;25</td><td class="cd">Provide your response in JSON format exactly matching this structure: {{ … }}</td><td>The schema-by-example. Note the placeholder values double as instructions ("A 3-4 sentence professional summary…"). The number of example items is a hint, not a rule — writing three strengths makes ~3 likely, not guaranteed.</td></tr>
+        <tr><td class="ln">27&ndash;28</td><td class="cd">Resume text: {resume_text}</td><td>The resume goes <strong>last</strong>. That ordering is intentional in prompt design: instructions first, bulk data last, so a very long resume doesn't push the instructions out of the model's attention.</td></tr>
+        <tr><td class="ln">30&ndash;31</td><td class="cd">response_text = self.client.generate_json(prompt) / return extract_json_from_text(response_text)</td><td>The two-step handoff repeated in all four methods: send the prompt, then rescue a dictionary out of the reply.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h4>The other two methods, and how they differ</h4>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Method</th><th>Lines</th><th>Persona &amp; ask</th><th>Keys it requests</th></tr></thead>
+      <tbody>
+        <tr><td class="term">analyze_resume</td><td class="ln">11&ndash;31</td><td>"expert technical recruiter" — qualitative critique</td><td>summary, strengths, weaknesses, missing_skills, recruiter_feedback, reasoning</td></tr>
+        <tr><td class="term">generate_interview_questions</td><td class="ln">33&ndash;52</td><td>"hiring manager" — <em>"generate exactly 10 questions for each category"</em></td><td>hr_questions, technical_questions, behavioral_questions, project_based_questions, reasoning</td></tr>
+        <tr><td class="term">generate_readiness_score</td><td class="ln">54&ndash;84</td><td>"highly analytical AI scoring system" — numbers 0&ndash;100 plus advice</td><td>scores{overall, technical_skills, project_quality, resume_quality, industry_readiness}, suggestions{resume_improvements, project_suggestions, certifications, portfolio}, reasoning</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box warn">
+      <span class="tag">About those scores</span>
+      <p>Be clear-eyed about what the readiness score is. It is <strong>not</strong> computed by an algorithm, a rubric, or a trained model. A language model is asked to produce plausible numbers, and it produces plausible numbers. Run the same resume twice and you may get 72 and then 78. The example values in the prompt (85, 80, 90, 75, 85) even act as a subtle anchor, nudging outputs toward that range. Treat the scores as structured opinion, not measurement — the <code>reasoning</code> field is the genuinely useful part.</p>
+    </div>
+    <div class="box note">
+      <span class="tag">The invisible contract</span>
+      <p>The key names written in these prompts must match the key names in app.py's <code>.get()</code> calls <em>exactly, character for character</em>. Nothing checks this. There's no shared schema file, no validation. If you rename <code>missing_skills</code> to <code>skill_gaps</code> here, app.py line 191 keeps asking for <code>missing_skills</code>, gets nothing, and renders an empty row of tags — silently. This coupling is the most likely thing to break when you start editing.</p>
+    </div>
+  </div>
+</details>
+
+<!-- ---------- roadmap.py ---------- -->
+<h3 id="f-roadmap">services/roadmap.py &mdash; the 30/60/90 plan</h3>
+
+<details class="file">
+  <summary><span class="chip svc">service</span> roadmap.py &nbsp;·&nbsp; full walkthrough <span class="summary-note">lines 1&ndash;39</span></summary>
+  <div class="body">
+    <div class="code-block"><div class="code-head"><span class="code-path">services/roadmap.py</span><span class="code-lang">python</span></div><pre><code class="language-python">from services.gemini_service import GeminiClient
+from utils.helpers import extract_json_from_text
+
+class LearningRoadmap:
+    """Generates personalized 30-60-90 day learning plans."""
+
+    def __init__(self, client: GeminiClient):
+        self.client = client
+
+    def generate_roadmap(self, missing_skills: list, role: str, experience: str) -&gt; dict:
+        skills_str = ", ".join(missing_skills) if missing_skills else "General industry best practices and advanced topics"
+
+        prompt = f"""
+        You are an elite career coach and technical mentor.
+        A candidate aiming for a "{role}" role ({experience} level) is missing the following key skills: {skills_str}.
+
+        Create a practical, actionable 30-60-90 day learning roadmap ...
+        """
+        response_text = self.client.generate_json(prompt)
+        return extract_json_from_text(response_text)</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">10</td><td class="cd">def generate_roadmap(self, missing_skills: list, role, experience)</td><td>The only method here, and the only one in the project that takes another AI call's output as input.</td></tr>
+        <tr><td class="ln">13</td><td class="cd">skills_str = ", ".join(missing_skills) if missing_skills else "General industry best practices…"</td><td>Two ideas in one line. <code>", ".join(list)</code> turns <code>["Docker", "AWS"]</code> into the single string <code>"Docker, AWS"</code> — necessary because a prompt is text, not a list. The trailing <code>if … else …</code> is a <strong>conditional expression</strong>, read as: use the joined skills, <em>unless</em> the list is empty, in which case use the generic fallback. Without it, a candidate with no gaps would produce the sentence "is missing the following key skills: ." and the model would flounder.</td></tr>
+        <tr><td class="ln">22&ndash;36</td><td class="cd">"day_30": {{ "focus": …, "tasks": [...] }}</td><td>A <strong>nested</strong> schema — objects inside an object. This is why app.py line 235 does a two-step lookup: first <code>r_data.get('day_30', {})</code>, then <code>.get('tasks', [])</code> inside it.</td></tr>
+        <tr><td class="ln">37</td><td class="cd">(no resume text in this prompt)</td><td>Deliberate and smart: the roadmap only needs the <em>gaps</em>, not the whole resume. Shorter prompt = faster, cheaper, and more focused output.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</details>
+
+<!-- ---------- resume_parser.py ---------- -->
+<h3 id="f-parser">services/resume_parser.py &mdash; documents into words</h3>
+
+<details class="file">
+  <summary><span class="chip svc">service</span> resume_parser.py &nbsp;·&nbsp; full walkthrough <span class="summary-note">lines 1&ndash;59</span></summary>
+  <div class="body">
+    <div class="code-block"><div class="code-head"><span class="code-path">services/resume_parser.py</span><span class="code-lang">python</span></div><pre><code class="language-python">import io
+import PyPDF2
+from docx import Document
+
+class ResumeParser:
+    """Handles extraction of text from various resume file formats."""
+
+    @staticmethod
+    def extract_text(file_obj, filename: str) -&gt; str:
+        if not file_obj:
+            raise ValueError("No file provided.")
+
+        ext = filename.split('.')[-1].lower()
+
+        try:
+            if ext == 'pdf':
+                return ResumeParser._extract_from_pdf(file_obj)
+            elif ext in ['doc', 'docx']:
+                return ResumeParser._extract_from_docx(file_obj)
+            else:
+                raise ValueError(f"Unsupported file format: {ext}. Please upload PDF or DOCX.")
+        except Exception as e:
+            raise ValueError(f"Error parsing file: {str(e)}")
+
+    @staticmethod
+    def _extract_from_pdf(file_obj) -&gt; str:
+        text = ""
+        try:
+            pdf_reader = PyPDF2.PdfReader(file_obj)
+            for page in pdf_reader.pages:
+                extracted = page.extract_text()
+                if extracted:
+                    text += extracted + "\n"
+        except Exception as e:
+            raise Exception(f"Failed to read PDF: {str(e)}")
+
+        if not text.strip():
+            raise Exception("PDF appears to be empty or contains only unextractable images.")
+
+        return text
+
+    @staticmethod
+    def _extract_from_docx(file_obj) -&gt; str:
+        text = ""
+        try:
+            doc = Document(file_obj)
+            for para in doc.paragraphs:
+                text += para.text + "\n"
+        except Exception as e:
+            raise Exception(f"Failed to read DOCX: {str(e)}")
+
+        if not text.strip():
+            raise Exception("Document appears to be empty.")
+
+        return text</code></pre></div>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Code</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">1</td><td class="cd">import io</td><td><strong>Unused.</strong> Third dead import in the project — a sign these files were written quickly with a standard header.</td></tr>
+        <tr><td class="ln">3</td><td class="cd">from docx import Document</td><td>The library installs as <code>python-docx</code> but imports as <code>docx</code>. Everyone gets caught by this once.</td></tr>
+        <tr><td class="ln">8</td><td class="cd">@staticmethod</td><td>Marks a method that needs no object. That's why app.py can write <code>ResumeParser.extract_text(...)</code> directly instead of building a parser first. Appropriate here because parsing is a pure function — same input, same output, nothing remembered.</td></tr>
+        <tr><td class="ln">14&ndash;15</td><td class="cd">if not file_obj: raise ValueError("No file provided.")</td><td>Defensive guard. Currently unreachable, because app.py line 71 already checks. Cheap insurance for the day someone calls this from somewhere else.</td></tr>
+        <tr><td class="ln">17</td><td class="cd">ext = filename.split('.')[-1].lower()</td><td>Extension detection, dissected in <a href="#upload">section 6</a>.</td></tr>
+        <tr><td class="ln">26&ndash;27</td><td class="cd">except Exception as e: raise ValueError(f"Error parsing file: {str(e)}")</td><td>Catches everything from the branches above and re-labels it. <strong>Note the side effect:</strong> the <code>raise ValueError("Unsupported file format…")</code> on line 25 is thrown <em>inside</em> this try block, so it gets caught and re-wrapped. The user ends up seeing "Error parsing file: Unsupported file format: txt…" — slightly redundant wording caused by an error being caught by its own handler.</td></tr>
+        <tr><td class="ln">31&ndash;37</td><td class="cd">pdf_reader = PyPDF2.PdfReader(file_obj) / for page in pdf_reader.pages:</td><td>Opens the in-memory PDF and loops over pages. <code>text += extracted + "\n"</code> keeps appending, so a 3-page resume becomes one string with pages separated by newlines. The <code>if extracted:</code> guard matters — <code>extract_text()</code> returns <code>None</code> for image-only pages, and adding <code>None</code> to a string would crash.</td></tr>
+        <tr><td class="ln">41&ndash;42</td><td class="cd">if not text.strip(): raise Exception("PDF appears to be empty…")</td><td><code>.strip()</code> removes surrounding whitespace, so a document of nothing but blank lines correctly counts as empty. This is the scanned-PDF failure described in section 6.</td></tr>
+        <tr><td class="ln">50&ndash;52</td><td class="cd">doc = Document(file_obj) / for para in doc.paragraphs:</td><td>The DOCX equivalent. <strong>Only paragraphs.</strong> Tables, headers, footers and text boxes are invisible to this loop — a real content-loss risk for template-based resumes.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box try">
+      <span class="tag">A worthwhile 4-line upgrade</span>
+      <p>To also capture table text in DOCX files, add after the paragraph loop:</p>
+      <div class="code-block"><div class="code-head"><span class="code-path">services/resume_parser.py — inside _extract_from_docx</span><span class="code-lang">python</span></div><pre><code class="language-python">for table in doc.tables:
+    for row in table.rows:
+        for cell in row.cells:
+            text += cell.text + "\n"</code></pre></div>
+    </div>
+  </div>
+</details>
+
+<!-- ---------- helpers.py ---------- -->
+<h3 id="f-helpers">utils/helpers.py &mdash; the rescue kit</h3>
+<p>Fully dissected in <a href="#json">section 7</a>. Two functions, and one of them is never used.</p>
+
+<details class="file">
+  <summary><span class="chip util">utility</span> helpers.py &nbsp;·&nbsp; the unused half <span class="summary-note">lines 36&ndash;40</span></summary>
+  <div class="body">
+    <div class="code-block"><div class="code-head"><span class="code-path">utils/helpers.py lines 36&ndash;40</span><span class="code-lang">python</span></div><pre><code class="language-python">def clean_markdown(text: str) -&gt; str:
+    """Removes common markdown artifacts if plain text is needed."""
+    text = re.sub(r'\*\*(.*?)\*\*', r'\1', text)
+    text = re.sub(r'_(.*?)_', r'\1', text)
+    return text</code></pre></div>
+    <p><code>re.sub(pattern, replacement, text)</code> is find-and-replace with regex. The first line finds <code>**bold**</code> and replaces it with just the captured inner text (<code>\1</code> means "whatever group 1 captured"), stripping the asterisks. The second does the same for <code>_italic_</code>.</p>
+    <div class="box note">
+      <span class="tag">Dead code</span>
+      <p>Searching the whole project for <code>clean_markdown</code> finds exactly one hit: this definition. Nothing calls it. It was presumably written in case AI replies needed de-formatting, which turned out not to be necessary since <code>st.markdown</code> renders the formatting nicely anyway. Harmless, but it's the kind of thing that confuses you six months later — either use it or delete it.</p>
+    </div>
+  </div>
+</details>
+
+<!-- ---------- style.css ---------- -->
+<h3 id="f-css">assets/style.css &mdash; the paint job</h3>
+<p><strong>117 lines of CSS.</strong> This file does not affect behaviour at all — remove it and every feature still works, it just looks like default Streamlit. It's injected wholesale by app.py line 28.</p>
+
+<details class="file" open>
+  <summary><span class="chip cfg">styling</span> style.css &nbsp;·&nbsp; every rule explained <span class="summary-note">lines 1&ndash;117</span></summary>
+  <div class="body">
+    <p>CSS works as <em>selector</em> + <em>declarations</em>: "find these elements, apply these properties". Here's each block in this file.</p>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Line</th><th>Rule</th><th>What it does &amp; how to change it</th></tr></thead>
+      <tbody>
+        <tr><td class="ln">2</td><td class="cd">@import url('…fonts.googleapis.com…Inter…')</td><td>Downloads the Inter typeface from Google Fonts in weights 300&ndash;700. <strong>To change the app's font</strong>, swap this URL for another family and update line 5 to match.</td></tr>
+        <tr><td class="ln">4&ndash;6</td><td class="cd">html, body, [class*="css"] { font-family: 'Inter', sans-serif; }</td><td>Applies the font everywhere. <code>[class*="css"]</code> means "any element whose class attribute contains the letters css" — a blunt catch-all aimed at Streamlit's generated class names.</td></tr>
+        <tr><td class="ln">9&ndash;15</td><td class="cd">h1, h2, h3 { background: -webkit-linear-gradient(45deg, #4f46e5, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }</td><td>The <strong>gradient text trick</strong>. There's no CSS property for "gradient-coloured letters", so: paint a purple→pink gradient as the element's background, clip that background to the shape of the text, then make the text itself transparent so the gradient shows through the letterforms. <strong>Change those two hex codes to recolour every heading in the app.</strong> Caveat: the <code>-webkit-</code> prefix means this is Chrome/Safari/Edge behaviour; in Firefox headings may render with normal colour.</td></tr>
+        <tr><td class="ln">17&ndash;23</td><td class="cd">h3 { … background: none; -webkit-text-fill-color: currentColor; color: #e2e8f0; }</td><td>Immediately <em>undoes</em> the gradient for h3 only, making sub-headings plain light grey. Because this block comes after the one above and targets the same element, it wins — that's the CSS cascade in action: later rules of equal specificity override earlier ones.</td></tr>
+        <tr><td class="ln">26&ndash;29</td><td class="cd">[data-testid="stSidebar"] { background-color: #0f172a; }</td><td>The sidebar's dark navy background. <code>data-testid</code> attributes are Streamlit's <em>stable</em> hooks — much safer to target than generated class names.</td></tr>
+        <tr><td class="ln">31&ndash;35</td><td class="cd">[data-testid="stSidebar"] h1 { … #10b981, #3b82f6 … }</td><td>Gives the sidebar title a different gradient (green→blue) from the main headings (purple→pink), which is why "⚒️ InterviewForge AI" looks different from the page titles.</td></tr>
+        <tr><td class="ln">38&ndash;45</td><td class="cd">.css-1r6slb0, .css-1y4p8pa { background-color: #1e293b; border-radius: 10px; … }</td><td><strong>Almost certainly doing nothing.</strong> These are auto-generated Streamlit class names, and they change with almost every Streamlit release. If your columns don't look like cards, this is why. To get reliable cards, use <code>st.container(border=True)</code> in app.py instead of trying to style hashed classes.</td></tr>
+        <tr><td class="ln">48&ndash;57</td><td class="cd">.stButton&gt;button { width:100%; background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); … }</td><td>The Generate button: full width, indigo gradient at a 135° angle, white text, no border, 8px rounded corners, 600 weight, and <code>transition: all 0.3s ease</code> which makes the hover change animate smoothly over 0.3 seconds instead of snapping.</td></tr>
+        <tr><td class="ln">59&ndash;64</td><td class="cd">.stButton&gt;button:hover { transform: translateY(-2px); box-shadow: …; }</td><td>On hover the button lifts 2 pixels and gains a soft indigo glow. <code>translateY(-2px)</code> means "move up 2px" — negative Y is upward in CSS.</td></tr>
+        <tr><td class="ln">67&ndash;71</td><td class="cd">[data-testid="stMetricValue"] { font-size:2rem; color:#10b981; }</td><td>Makes the big "Overall Readiness" number large and emerald green. <strong>This is why the score is green regardless of whether it's 20 or 95</strong> — the colour is fixed, not conditional. Making it red below 50 would require conditional styling in app.py, not CSS.</td></tr>
+        <tr><td class="ln">74&ndash;76</td><td class="cd">.stProgress &gt; div &gt; div &gt; div &gt; div { background-image: linear-gradient(to right, #4f46e5, #ec4899); }</td><td>The four progress bars' indigo→pink fill. The chain of <code>&gt;</code> means "direct child of", drilling four levels into Streamlit's internal markup — fragile in the same way as the card rule, though this particular structure has been stable for a while.</td></tr>
+        <tr><td class="ln">79&ndash;101</td><td class="cd">.stTabs …</td><td>The tab strip: 2rem gaps between tabs, 3.5rem tall, grey (#94a3b8) when idle, near-white on hover, and — for the selected tab — white text plus a 2px indigo underline (<code>[aria-selected="true"]</code>). The <code>!important</code> flags force these to beat Streamlit's own styles.</td></tr>
+        <tr><td class="ln">104&ndash;109</td><td class="cd">.streamlit-expanderHeader { font-style: italic; … }</td><td>Intended to italicise the "🤔 Why this score?" headers. This is another legacy class name that newer Streamlit versions likely no longer emit — so this rule may also be inert.</td></tr>
+        <tr><td class="ln">112&ndash;116</td><td class="cd">div.stAlert { background-color: rgba(15,23,42,0.6); border-left: 4px solid #6366f1; }</td><td><strong>This styles all your alert boxes</strong> — every <code>st.error</code>, <code>st.info</code>, <code>st.warning</code>. Semi-transparent dark background with a 4px indigo left border. Notice the consequence: because the border colour is fixed indigo for <em>all</em> alert types, your red errors and blue infos look more alike than Streamlit intended. If you want errors to shout, give them a red left border here.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box warn">
+      <span class="tag">The dark-mode assumption</span>
+      <p>Every colour in this file — #0f172a sidebar, #e2e8f0 text, #1e293b cards — assumes a dark background. But nothing in the project actually forces dark mode; Streamlit follows the viewer's system theme. On a machine set to light mode, you get light-grey text on a white page. To lock the app to dark, create <code>.streamlit/config.toml</code> with a <code>[theme]</code> section setting <code>base = "dark"</code>.</p>
+    </div>
+  </div>
+</details>
+
+<!-- ---------- config files ---------- -->
+<h3 id="f-config">Config files, markers and leftovers</h3>
+
+<details class="file">
+  <summary><span class="chip cfg">config</span> .env &nbsp;·&nbsp; .env.example &nbsp;·&nbsp; .gitignore</summary>
+  <div class="body">
+    <p><strong><code>.env</code></strong> holds one line: <code>GEMINI_API_KEY=AIza…</code>. It is read by <code>load_dotenv()</code> at app.py line 13 and never appears in Git. There is no quoting, no spaces around the <code>=</code>, and no <code>export</code> keyword — just <code>KEY=value</code>.</p>
+    <p><strong><code>.env.example</code></strong> contains <code>GEMINI_API_KEY=your_gemini_api_key_here</code>. Its entire purpose is documentation: it's committed to Git so anyone cloning the repo can see which variables they need to supply, without ever seeing your real key. The convention is universal across the industry.</p>
+    <p><strong><code>.gitignore</code></strong> — six lines, each a pattern Git must ignore:</p>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Pattern</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="term">.env</td><td><strong>The critical one.</strong> Keeps your API key off GitHub. Bots scrape public repos for leaked keys within minutes of a push.</td></tr>
+        <tr><td class="term">__pycache__/</td><td>Python's auto-generated bytecode cache. Machine-specific, regenerates itself, pure noise in a repo.</td></tr>
+        <tr><td class="term">*.pyc</td><td>The individual compiled files, in case any sit outside a <code>__pycache__</code> folder. <code>*</code> matches any name.</td></tr>
+        <tr><td class="term">.venv/ and venv/</td><td>Virtual environment folders — hundreds of megabytes of installed libraries that anyone can rebuild from requirements.txt. Never commit these.</td></tr>
+        <tr><td class="term">.DS_Store</td><td>A junk file macOS scatters in every folder it opens. Ignored by habit even on Windows projects.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</details>
+
+<details class="file">
+  <summary><span class="chip cfg">config</span> __init__.py files &nbsp;·&nbsp; __pycache__ &nbsp;·&nbsp; README.md</summary>
+  <div class="body">
+    <p><strong><code>services/__init__.py</code> and <code>utils/__init__.py</code></strong> each contain a single comment line and nothing else. Their presence is what tells Python "this folder is a package you may import from", making <code>from services.analyzer import ResumeAnalyzer</code> work. (Modern Python can sometimes import without them, but including them is the reliable, conventional choice.) They're also where you'd put shortcuts later — e.g. adding <code>from .analyzer import ResumeAnalyzer</code> would let app.py write <code>from services import ResumeAnalyzer</code> instead.</p>
+    <p><strong><code>__pycache__/</code></strong> folders hold <code>.pyc</code> files — your source compiled to bytecode so subsequent starts are faster. Python creates and updates them automatically. Yours contains both <code>cpython-310</code> and <code>cpython-314</code> versions, meaning this project has been run under Python 3.10 and 3.14 on this machine. Delete them any time; they reappear.</p>
+    <p><strong><code>README.md</code></strong> is written for humans on GitHub and read by no code. It documents features, the folder tree, and five setup steps. Its "Future Improvements" list — GitHub API integration, mock interview with voice feedback, PDF export of the roadmap, unit tests — is effectively the project's own roadmap, and it lines up closely with <a href="#limits">section 12</a>.</p>
+    <div class="box note">
+      <span class="tag">One thing to fix in the README</span>
+      <p>Step 2 tells readers to create a virtual environment, but your working copy doesn't use one — the libraries are installed globally. That's a harmless mismatch for you, but if you share this repo, either follow your own instructions or soften them, so a newcomer isn't confused about which setup produced the code.</p>
+    </div>
+  </div>
+</details>
+</section>
+
+<!-- ============ 10 ============ -->
+<section id="decisions">
+  <span class="sec-num">Section 10</span>
+  <h2>Roads not taken</h2>
+  <p class="sec-intro">Every choice in this project ruled out alternatives. Here is what was chosen, what the realistic alternative was, and how the outcome would have differed — the reasoning you'd need if someone interviewed you about your own project.</p>
+
+  <h3>Streamlit, instead of Flask/Django + React</h3>
+  <div class="table-scroll"><table>
+    <thead><tr><th></th><th>Streamlit (chosen)</th><th>Flask/FastAPI + React (alternative)</th></tr></thead>
+    <tbody>
+      <tr><td class="term">Files needed</td><td>1 Python file for the whole UI</td><td>Typically 20+ files across two projects, two languages, two package managers</td></tr>
+      <tr><td class="term">Time to working demo</td><td>Hours</td><td>Days</td></tr>
+      <tr><td class="term">HTML/CSS/JS you write</td><td>None (117 lines of optional CSS)</td><td>All of it</td></tr>
+      <tr><td class="term">State handling</td><td>Whole script re-runs; you fight it with <code>session_state</code></td><td>Natural — components hold their own state and re-render selectively</td></tr>
+      <tr><td class="term">Design control</td><td>Constrained to Streamlit's components and look</td><td>Total</td></tr>
+      <tr><td class="term">Deploying for many users</td><td>Awkward — one server process per user session, heavy</td><td>Standard, scales normally</td></tr>
+    </tbody>
+  </table></div>
+  <p><strong>Verdict:</strong> for a portfolio project that must demonstrate AI capability rather than frontend craft, Streamlit is the correct call by a wide margin. The cost you pay shows up in exactly two places — the re-run model forcing <code>session_state</code>, and CSS selectors that fight Streamlit's internals. Both are visible in your code.</p>
+
+  <h3>Gemini Flash, instead of GPT / Claude / a local model</h3>
+  <ul>
+    <li><strong>Gemini's free tier is genuinely usable</strong> — for a student project you can run dozens of analyses without a credit card. OpenAI and Anthropic require payment up front for API access.</li>
+    <li><strong>Flash over Pro:</strong> flash models are optimised for speed and cost. Four sequential calls on a Pro-tier model would push a run past a minute and cost noticeably more per analysis. For "read this text, produce structured feedback", flash is more than capable.</li>
+    <li><strong>Cloud over local (Llama, Mistral via Ollama):</strong> a local model would be free forever and fully private — your resume would never leave the machine. But it needs several GB of RAM, a decent GPU for acceptable speed, quality at small sizes is markedly worse for structured-output tasks, and the setup burden lands on anyone who wants to run your project. For a shareable demo, the API wins.</li>
+    <li><strong>The cost of this choice:</strong> your app is only as available as Google's servers. The elaborate fallback chain in <code>gemini_service.py</code> is direct evidence that this bit — the git history shows a commit specifically fixing "API overload" errors.</li>
+  </ul>
+
+  <h3>Prompt-shaped JSON, instead of enforced schemas</h3>
+  <p>You show the model an example and hope. The alternatives, in rising order of strictness:</p>
+  <ol>
+    <li><strong>What you do:</strong> example JSON in the prompt + <code>response_mime_type</code>. Valid JSON guaranteed, correct <em>keys</em> not guaranteed.</li>
+    <li><strong>Gemini's <code>response_schema</code>:</strong> hand the API a formal schema; keys and types are enforced by Google. Roughly 10 extra lines per prompt.</li>
+    <li><strong>Pydantic validation after the fact:</strong> define the expected shape as a Python class and validate every reply; a mismatch raises a loud, specific error instead of rendering a blank section.</li>
+  </ol>
+  <p><strong>How the outcome differs:</strong> today, a renamed or missed key produces an empty area of the dashboard with no explanation. With either alternative you'd get an immediate, precise error naming the field. For a solo project that's an acceptable trade; for anything with real users it wouldn't be.</p>
+
+  <h3>Four sequential calls, instead of four parallel ones</h3>
+  <p>Calls 1, 2 and 3 are completely independent — only call 4 (the roadmap) needs call 1's output. Running the first three concurrently with <code>concurrent.futures.ThreadPoolExecutor</code> would cut a 40-second wait to roughly 15.</p>
+  <p><strong>Why sequential is defensible anyway:</strong> three simultaneous requests on a free-tier key are far more likely to trigger 429 rate-limit errors — and the whole <code>CALL_SPACING</code> mechanism exists precisely because that was a real problem. Sequential execution also makes the progress bar meaningful and the code readable top-to-bottom. It's a deliberate speed-for-reliability trade, and worth saying out loud if anyone asks why your app takes 40 seconds.</p>
+
+  <h3>No caching, no database, no accounts</h3>
+  <div class="kv">
+    <dt>No cache</dt><dd>Re-analysing the same resume for the same role spends four fresh API calls. A dictionary keyed by a hash of (resume text + role + level) would make repeats instant and free. Roughly 10 lines. The reason it's absent: for a demo, nobody analyses the same resume twice.</dd>
+    <dt>No database</dt><dd>Nothing survives a refresh. Adding SQLite would let you track score improvements over time — arguably the single most compelling feature this project doesn't have. It would also mean schema design, migrations and a storage story for resume text, which is real work.</dd>
+    <dt>No accounts</dt><dd>With one shared API key and no login, anyone who can reach the URL spends your quota. That's exactly why this should stay a localhost tool until auth exists.</dd>
+  </div>
+
+  <h3>PyPDF2, instead of pdfplumber / PyMuPDF / OCR</h3>
+  <p>PyPDF2 is the most widely known pure-Python PDF reader — easy to install, no system dependencies. <strong>pdfplumber</strong> extracts text with better layout fidelity and can read tables. <strong>PyMuPDF</strong> is dramatically faster and more accurate, but ships compiled binaries and carries a restrictive licence. <strong>Tesseract OCR</strong> would handle scanned resumes but requires installing a separate program outside Python.</p>
+  <p><strong>Outcome difference:</strong> with pdfplumber, multi-column resume layouts (very common in modern templates) would extract in a more sensible reading order. PyPDF2 sometimes interleaves columns into scrambled text — and since that scrambled text is what the AI judges, extraction quality directly caps analysis quality. If you improve one dependency, make it this one.</p>
+
+  <div class="box why">
+    <span class="tag">The one-sentence summary of this project's philosophy</span>
+    <p>Every decision optimises for <em>getting a working, demonstrable AI product built by one person quickly</em> — and consistently trades away scale, strictness and durability to get there. That is the right optimisation for what this is, and being able to name the trade-offs is what separates "I built it" from "I understand it".</p>
+  </div>
+</section>
+
+<!-- ============ 11 ============ -->
+<section id="cookbook">
+  <span class="sec-num">Section 11</span>
+  <h2>Change-it-yourself recipes</h2>
+  <p class="sec-intro">Concrete edits with exact file and line numbers. Every one of these is safe to try — if something breaks, undo the edit and save; Streamlit reloads automatically.</p>
+
+  <div class="box try">
+    <span class="tag">Before you edit anything</span>
+    <p>Keep the app running while you work. Streamlit watches your files and shows a "Source file changed → Rerun" prompt on every save. If you break the Python syntax, you'll get a red traceback in the browser rather than a silent failure — read the line number it names and fix that line.</p>
+  </div>
+
+  <h3>Text and wording</h3>
+  <div class="table-scroll"><table>
+    <thead><tr><th>I want to change…</th><th>File &amp; line</th><th>What to edit</th></tr></thead>
+    <tbody>
+      <tr><td>The browser tab title</td><td class="term">app.py:17</td><td><code>page_title="InterviewForge AI"</code></td></tr>
+      <tr><td>The tab icon</td><td class="term">app.py:18</td><td><code>page_icon="⚒️"</code> — any emoji</td></tr>
+      <tr><td>The sidebar app name</td><td class="term">app.py:47</td><td><code>st.title("⚒️ InterviewForge AI")</code></td></tr>
+      <tr><td>The tagline under it</td><td class="term">app.py:48</td><td><code>"Your Personal AI Career Coach."</code></td></tr>
+      <tr><td>The three step headings</td><td class="term">app.py:51, 54, 57</td><td><code>"1. Upload Resume"</code> etc.</td></tr>
+      <tr><td>The upload box label</td><td class="term">app.py:52</td><td>First argument: <code>"Upload PDF or DOCX"</code></td></tr>
+      <tr><td>The role field hint</td><td class="term">app.py:55</td><td><code>"e.g., Data Scientist, Frontend Dev"</code></td></tr>
+      <tr><td>The button label</td><td class="term">app.py:64</td><td><code>"🚀 Generate AI Analysis"</code></td></tr>
+      <tr><td>The footer credit</td><td class="term">app.py:67</td><td><code>st.caption("Built with ❤️ …")</code></td></tr>
+      <tr><td>The four tab names</td><td class="term">app.py:113&ndash;116</td><td>The four strings in the list</td></tr>
+      <tr><td>Any section heading</td><td class="term">app.py:122, 177, 182, 186, 190, 200, 208, 212, 216, 220, 226, 243, 248, 252, 256, 260</td><td>Each <code>st.header</code> / <code>st.subheader</code> string</td></tr>
+      <tr><td>The welcome screen copy</td><td class="term">app.py:267&ndash;274</td><td>The whole triple-quoted markdown block</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Alerts and error messages</h3>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Message</th><th>Line</th><th>Type</th></tr></thead>
+    <tbody>
+      <tr><td>"Failed to initialize AI services: …"</td><td class="term">app.py:40</td><td>error (red)</td></tr>
+      <tr><td>"Please upload a resume first."</td><td class="term">app.py:72</td><td>error (red)</td></tr>
+      <tr><td>"Please enter a target role."</td><td class="term">app.py:74</td><td>error (red)</td></tr>
+      <tr><td>"AI Services are not available. Check your API Key."</td><td class="term">app.py:76</td><td>error (red)</td></tr>
+      <tr><td>"Extracting text from document..."</td><td class="term">app.py:79</td><td>spinner</td></tr>
+      <tr><td>"Starting AI Analysis..." → "Analysis Complete!"</td><td class="term">app.py:83, 87, 90, 94, 97</td><td>progress bar labels</td></tr>
+      <tr><td>"Analyzing Resume &amp; Finding Gaps..."</td><td class="term">app.py:85</td><td>spinner</td></tr>
+      <tr><td>"An error occurred during analysis: …"</td><td class="term">app.py:106</td><td>error (red)</td></tr>
+      <tr><td>"**Recruiter Feedback**: …"</td><td class="term">app.py:194</td><td>info (blue)</td></tr>
+      <tr><td>"👈 Please upload your resume…"</td><td class="term">app.py:265</td><td>info (blue)</td></tr>
+      <tr><td>"GEMINI_API_KEY environment variable not set…"</td><td class="term">gemini_service.py:27</td><td>raised exception → surfaces in app.py:40</td></tr>
+      <tr><td>"Unsupported file format: …"</td><td class="term">resume_parser.py:25</td><td>raised → surfaces in app.py:106</td></tr>
+      <tr><td>"PDF appears to be empty or contains only unextractable images."</td><td class="term">resume_parser.py:42</td><td>raised → surfaces in app.py:106</td></tr>
+      <tr><td>"Document appears to be empty."</td><td class="term">resume_parser.py:57</td><td>raised → surfaces in app.py:106</td></tr>
+      <tr><td>"Response was empty or blocked by safety filters."</td><td class="term">gemini_service.py:85, 106</td><td>raised → triggers retry</td></tr>
+      <tr><td>"All models in fallback chain failed. Last error: …"</td><td class="term">gemini_service.py:75</td><td>raised → surfaces in app.py:106</td></tr>
+    </tbody>
+  </table></div>
+  <p>To change an alert's <em>colour</em>, change the function: <code>st.error</code> → red, <code>st.warning</code> → yellow, <code>st.info</code> → blue, <code>st.success</code> → green. So making the missing-file message gentler is a one-word edit:</p>
+  <div class="code-block"><div class="code-head"><span class="code-path">app.py line 72 — before / after</span><span class="code-lang">python</span></div><pre><code class="language-python">st.error("Please upload a resume first.")       # red, stern
+st.warning("Upload a resume to get started.")   # yellow, softer</code></pre></div>
+
+  <h3>Colours and styling</h3>
+  <div class="table-scroll"><table>
+    <thead><tr><th>I want to change…</th><th>File &amp; line</th><th>What to edit</th></tr></thead>
+    <tbody>
+      <tr><td>Every heading's gradient</td><td class="term">style.css:11</td><td><code>#4f46e5, #ec4899</code> (purple → pink)</td></tr>
+      <tr><td>The sidebar title gradient</td><td class="term">style.css:32</td><td><code>#10b981, #3b82f6</code> (green → blue)</td></tr>
+      <tr><td>Sidebar background</td><td class="term">style.css:27</td><td><code>background-color: #0f172a</code></td></tr>
+      <tr><td>Button colour</td><td class="term">style.css:50</td><td><code>linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)</code></td></tr>
+      <tr><td>Button hover glow</td><td class="term">style.css:61</td><td><code>box-shadow: 0 4px 12px rgba(79,70,229,0.4)</code></td></tr>
+      <tr><td>The big score's green</td><td class="term">style.css:70</td><td><code>color: #10b981</code></td></tr>
+      <tr><td>Progress bar gradient</td><td class="term">style.css:75</td><td><code>linear-gradient(to right, #4f46e5, #ec4899)</code></td></tr>
+      <tr><td>Selected tab underline</td><td class="term">style.css:100</td><td><code>border-bottom: 2px solid #6366f1</code></td></tr>
+      <tr><td>Alert box left border</td><td class="term">style.css:114</td><td><code>border-left: 4px solid #6366f1</code></td></tr>
+      <tr><td>The app's font</td><td class="term">style.css:2 and :5</td><td>Google Fonts URL + <code>font-family</code> — change both</td></tr>
+      <tr><td>Skill tag pills</td><td class="term">app.py:191</td><td>Inline styles, <em>not</em> in the CSS file: <code>background:#334155; padding:4px 8px; border-radius:4px</code></td></tr>
+      <tr><td>Radar chart colours</td><td class="term">app.py:160&ndash;161</td><td><code>line_color='#6366f1'</code>, <code>fillcolor='rgba(99,102,241,0.4)'</code></td></tr>
+      <tr><td>Radar label colour</td><td class="term">app.py:169</td><td><code>font=dict(color='#e2e8f0')</code></td></tr>
+      <tr><td>Column width ratio</td><td class="term">app.py:124</td><td><code>st.columns([1, 2])</code> → try <code>[1, 1]</code></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Behaviour changes</h3>
+
+  <h4>Add an experience level</h4>
+  <div class="code-block"><div class="code-head"><span class="code-path">app.py line 60</span><span class="code-lang">python</span></div><pre><code class="language-python">["Student", "Fresher", "Intern", "Junior Developer", "Mid-Level", "Senior", "Staff / Principal"]</code></pre></div>
+  <p>That's the whole change — the value flows straight into every prompt as text.</p>
+
+  <h4>Change how many interview questions you get</h4>
+  <div class="code-block"><div class="code-head"><span class="code-path">services/analyzer.py line 37</span><span class="code-lang">python</span></div><pre><code class="language-python"># from:
+Based on their resume, generate tailored interview questions. Provide exactly 10 questions for each category.
+# to:
+Based on their resume, generate tailored interview questions. Provide exactly 5 questions for each category.</code></pre></div>
+  <p>Optionally also shorten the <code>["Q1", ..., "Q10"]</code> examples on lines 41&ndash;44 to match. Nothing enforces the count — you're persuading, not configuring — so occasionally you'll get 4 or 6.</p>
+
+  <h4>Change which AI models are used</h4>
+  <div class="code-block"><div class="code-head"><span class="code-path">services/gemini_service.py lines 14&ndash;19</span><span class="code-lang">python</span></div><pre><code class="language-python">MODEL_CHAIN = [
+    "gemini-3.7-flash",        # tried first
+    "gemini-3.6-flash",        # fallback if the above is overloaded
+    "gemini-3.5-flash",
+    "gemini-3.5-flash-lite",   # last resort
+]</code></pre></div>
+  <p>Reorder, add, or remove entries freely. Watch the terminal output to see which one actually served your request.</p>
+
+  <h4>Make it faster (at some risk)</h4>
+  <div class="code-block"><div class="code-head"><span class="code-path">services/gemini_service.py line 22</span><span class="code-lang">python</span></div><pre><code class="language-python">CALL_SPACING = 3   # → 0 removes ~9 seconds per run, but raises 429 risk on a free key</code></pre></div>
+
+  <h4>Accept a new file type (both edits required)</h4>
+  <div class="code-block"><div class="code-head"><span class="code-path">app.py line 52 &nbsp;+&nbsp; services/resume_parser.py lines 20&ndash;25</span><span class="code-lang">python</span></div><pre><code class="language-python"># app.py — let the widget accept it
+uploaded_file = st.file_uploader("Upload PDF, DOCX or TXT", type=['pdf', 'docx', 'txt'])
+
+# resume_parser.py — teach the parser what to do with it
+elif ext == 'txt':
+    return file_obj.read().decode('utf-8')</code></pre></div>
+  <p>Change only the first and uploads succeed but parsing fails with "Unsupported file format". Change only the second and the widget still refuses the file. This pairing is the most common self-inflicted bug in this codebase.</p>
+
+  <h4>Show a clear warning when the AI reply couldn't be parsed</h4>
+  <p>Fixes the silent-blank-dashboard problem from <a href="#json">section 7</a>:</p>
+  <div class="code-block"><div class="code-head"><span class="code-path">app.py — add after line 86</span><span class="code-lang">python</span></div><pre><code class="language-python">if not analysis_data:
+    st.warning("The AI reply couldn't be read. Try clicking Generate again.")</code></pre></div>
+
+  <h4>Add a fifth roadmap phase</h4>
+  <p>Two edits, both required: add <code>"day_120"</code> to the JSON example in <code>roadmap.py</code> (lines 22&ndash;36), then add a tuple to <code>phases</code> in app.py line 232:</p>
+  <div class="code-block"><div class="code-head"><span class="code-path">app.py line 232</span><span class="code-lang">python</span></div><pre><code class="language-python">phases = [('day_30', 'Days 1-30', '🌱'), ('day_60', 'Days 31-60', '🚀'),
+          ('day_90', 'Days 61-90', '⭐'), ('day_120', 'Days 91-120', '🏆')]</code></pre></div>
+</section>
+
+<!-- ============ 12 ============ -->
+<section id="limits">
+  <span class="sec-num">Section 12</span>
+  <h2>Honest limitations</h2>
+  <p class="sec-intro">Everything this project genuinely cannot do, or does fragilely. Knowing these is what lets you answer hard questions about your own work without being caught out.</p>
+
+  <div class="table-scroll"><table>
+    <thead><tr><th>Limitation</th><th>Where</th><th>Consequence</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Scanned PDFs don't work</strong> — no OCR</td><td class="term">resume_parser.py:41</td><td>Photo/scan-based resumes fail with "PDF appears to be empty". Common with resumes exported from phone apps.</td></tr>
+      <tr><td><strong>DOCX tables are ignored</strong></td><td class="term">resume_parser.py:51</td><td>Only <code>doc.paragraphs</code> is read. Skills or contact details in a table vanish silently — no error, just missing content the AI never sees.</td></tr>
+      <tr><td><strong>Unparseable AI replies fail silently</strong></td><td class="term">helpers.py:34</td><td>Returns <code>{}</code>; dashboard shows 0/100 and blank sections with no explanation of why.</td></tr>
+      <tr><td><strong>Prompt keys and UI keys are coupled by convention only</strong></td><td class="term">analyzer.py ↔ app.py</td><td>Rename a key in one place and that section silently renders empty. No validation catches it.</td></tr>
+      <tr><td><strong>Scores aren't measurements</strong></td><td class="term">analyzer.py:56&ndash;84</td><td>An LLM produces plausible numbers. Same resume, different run, different score. Not reproducible, not calibrated.</td></tr>
+      <tr><td><strong>File validation is extension-only</strong></td><td class="term">resume_parser.py:17</td><td>A renamed file reaches the parser and fails with a raw library error rather than a helpful message.</td></tr>
+      <tr><td><strong>Some CSS is probably inert</strong></td><td class="term">style.css:38, 104</td><td>Rules targeting hashed Streamlit class names (<code>.css-1r6slb0</code>) break across Streamlit versions. The "card" styling likely does nothing today.</td></tr>
+      <tr><td><strong>Dark colours, no dark-mode lock</strong></td><td class="term">style.css (throughout)</td><td>Every colour assumes a dark background, but the theme follows the viewer's system setting. Light-mode users get poor contrast.</td></tr>
+      <tr><td><strong>Nothing persists</strong></td><td class="term">app.py:100&ndash;103</td><td>Refresh = everything gone. No history, no progress tracking over time.</td></tr>
+      <tr><td><strong>No caching</strong></td><td class="term">—</td><td>Identical re-runs cost four fresh API calls and another 40 seconds.</td></tr>
+      <tr><td><strong>Sequential calls</strong></td><td class="term">app.py:86&ndash;96</td><td>~40s per run where ~15s is achievable with parallelism.</td></tr>
+      <tr><td><strong>No authentication</strong></td><td class="term">—</td><td>Anyone who can reach the URL spends your API quota. Keep it on localhost.</td></tr>
+      <tr><td><strong>No tests</strong></td><td class="term">—</td><td>Every change is verified by clicking through the UI. The README's own "Future Improvements" already flags this.</td></tr>
+      <tr><td><strong>Dead code</strong></td><td class="term">helpers.py:36, app.py:3, analyzer.py:1, resume_parser.py:1, requirements.txt:5</td><td><code>clean_markdown</code> never called; <code>json</code> and <code>io</code> imported but unused; <code>pandas</code> installed but never imported.</td></tr>
+      <tr><td><strong><code>.doc</code> is accepted in code but unsupported in reality</strong></td><td class="term">resume_parser.py:23</td><td>Currently unreachable (the uploader blocks it), but a trap if anyone widens the allowed types.</td></tr>
+      <tr><td><strong>Resume text leaves your machine</strong></td><td class="term">gemini_service.py</td><td>Full resume content is sent to Google's API. Fine for you; worth stating plainly if anyone else ever uses it.</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="box try">
+    <span class="tag">If you fix three things, fix these</span>
+    <p><strong>1.</strong> Surface parse failures instead of returning <code>{}</code> silently — one <code>st.warning</code> (recipe in section 11).<br>
+    <strong>2.</strong> Read DOCX tables — four lines, prevents real content loss.<br>
+    <strong>3.</strong> Delete the dead imports and the <code>pandas</code> dependency — five seconds, and it makes the project read as deliberate rather than accumulated.</p>
+  </div>
+</section>
+
+<!-- ============ 13 ============ -->
+<section id="glossary">
+  <span class="sec-num">Section 13</span>
+  <h2>Glossary</h2>
+  <p class="sec-intro">Fast lookup for every term used in this guide.</p>
+  <div class="table-scroll"><table>
+    <thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
+    <tbody>
+      <tr><td class="term">API</td><td>A doorway one program opens so other programs can ask it for things over the internet.</td></tr>
+      <tr><td class="term">API key</td><td>A long secret string proving you're allowed to use an API. Treated like a password.</td></tr>
+      <tr><td class="term">Argument</td><td>A value you hand to a function when calling it.</td></tr>
+      <tr><td class="term">Backoff (exponential)</td><td>Waiting longer after each failed retry — 5s, then 10s — to give a struggling server room to recover.</td></tr>
+      <tr><td class="term">Class</td><td>A blueprint describing what something can do. <code>GeminiClient</code> is one.</td></tr>
+      <tr><td class="term">Closure</td><td>A function defined inside another function that can still see the outer function's variables.</td></tr>
+      <tr><td class="term">Decorator</td><td>A <code>@something</code> line above a function that wraps it in extra behaviour.</td></tr>
+      <tr><td class="term">Dependency injection</td><td>Handing an object the tools it needs rather than letting it build its own. Used in <code>ResumeAnalyzer(client)</code>.</td></tr>
+      <tr><td class="term">Dictionary</td><td>Key → value pairs, e.g. <code>{"overall": 85}</code>. Same shape as JSON.</td></tr>
+      <tr><td class="term">Docstring</td><td>A triple-quoted description at the top of a function or class.</td></tr>
+      <tr><td class="term">Exception</td><td>An error object. <code>raise</code> throws one; <code>try/except</code> catches one.</td></tr>
+      <tr><td class="term">f-string</td><td>Text with variables slotted in: <code>f"Hello {name}"</code>.</td></tr>
+      <tr><td class="term">Function</td><td>A named, reusable recipe.</td></tr>
+      <tr><td class="term">HTTPS</td><td>Encrypted web traffic. Runs on port 443.</td></tr>
+      <tr><td class="term">JSON</td><td>Structured data written as plain text so any program can read it.</td></tr>
+      <tr><td class="term">JSON mode</td><td>Google's <code>response_mime_type="application/json"</code> setting that forces the model's output to be valid JSON.</td></tr>
+      <tr><td class="term">LLM</td><td>Large Language Model — the kind of AI Gemini is. Predicts text; doesn't look anything up or calculate.</td></tr>
+      <tr><td class="term">List comprehension</td><td>Building a list in one line: <code>[f(x) for x in items]</code>.</td></tr>
+      <tr><td class="term">localhost</td><td>Your own machine, addressable as a web server. Traffic never leaves the computer.</td></tr>
+      <tr><td class="term">Markdown</td><td>Simple text formatting: <code>**bold**</code>, <code>- bullets</code>, <code>### heading</code>.</td></tr>
+      <tr><td class="term">OCR</td><td>Optical Character Recognition — reading text out of images. Not used in this project.</td></tr>
+      <tr><td class="term">Port</td><td>A numbered doorway on a computer. Streamlit uses 8501; HTTPS uses 443.</td></tr>
+      <tr><td class="term">Prompt</td><td>The text you send an LLM. In this project it's built with f-strings and includes an example of the JSON you want back.</td></tr>
+      <tr><td class="term">Prompt engineering</td><td>Deliberately wording a prompt to shape the answer — assigning a role, showing an example, putting instructions last.</td></tr>
+      <tr><td class="term">Rate limit</td><td>A cap on how many API requests you may send per minute. Exceeding it returns error 429.</td></tr>
+      <tr><td class="term">Regex</td><td>A pattern language for finding text. Used in <code>helpers.py</code> to locate JSON inside messy replies.</td></tr>
+      <tr><td class="term">Re-run (Streamlit)</td><td>Streamlit's core behaviour: your entire script executes again from line 1 on every interaction.</td></tr>
+      <tr><td class="term">SDK</td><td>Software Development Kit — a library that wraps an API so you write Python instead of raw HTTP.</td></tr>
+      <tr><td class="term">session_state</td><td>Streamlit's memory that survives re-runs. Holds your four AI results.</td></tr>
+      <tr><td class="term">staticmethod</td><td>A method that belongs to a class for organisation but needs no object to call it.</td></tr>
+      <tr><td class="term">Transient error</td><td>A temporary failure (503, 429) worth retrying, as opposed to a permanent one (bad key) that never will be.</td></tr>
+      <tr><td class="term">Tuple</td><td>A fixed group of values in parentheses: <code>('day_30', 'Days 1-30', '🌱')</code>.</td></tr>
+      <tr><td class="term">Type hint</td><td><code>prompt: str -&gt; dict</code> — documentation of expected types. Not enforced by Python.</td></tr>
+      <tr><td class="term">Virtual environment</td><td>A private per-project library toolbox. This project doesn't currently use one.</td></tr>
+      <tr><td class="term">WebSocket</td><td>A persistent two-way browser↔server connection. How Streamlit pushes UI updates to your page.</td></tr>
+      <tr><td class="term">503 / 429 / 500</td><td>HTTP error codes: service unavailable / too many requests / server error. All treated as transient here.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+</main>
+</div>
+
+<footer>
+  <div class="inner">
+    <span>InterviewForge Field Guide — generated from the source at commit <code>3a31e56</code></span>
+    <span>11 source files · 4 AI calls per run · port 8501</span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+(function () {
+  if (window.hljs) {
+    document.querySelectorAll('pre code').forEach(function (el) {
+      try { window.hljs.highlightElement(el); } catch (e) {}
+    });
+  }
+
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.toc a'));
+  var targets = links.map(function (a) {
+    return document.getElementById(a.getAttribute('href').slice(1));
+  });
+
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var idx = targets.indexOf(entry.target);
+        if (idx === -1) return;
+        links.forEach(function (l) { l.classList.remove('active'); });
+        links[idx].classList.add('active');
+      });
+    }, { rootMargin: '0px 0px -75% 0px', threshold: 0 });
+
+    targets.forEach(function (t) { if (t) observer.observe(t); });
+  }
+})();
+</script>
+
+</main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js"></script>
+<script>
+(function () {
+  if (!window.mermaid) return;
+  var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  try {
+    window.mermaid.initialize({
+      startOnLoad: true,
+      theme: dark ? 'dark' : 'neutral',
+      securityLevel: 'strict',
+      flowchart: { curve: 'basis', useMaxWidth: true }
+    });
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>
